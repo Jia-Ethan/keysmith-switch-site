@@ -32,7 +32,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "我的提示词会被上传吗？",
-          a: "不会。提示词只存在本机的 `~/.keysmith-switch/`。App 只在检查更新、读取公告时访问 GitHub；打开「拓展」后才会读取拓展源。完整列表见[数据与隐私](/docs/privacy/)。",
+          a: "不会。提示词只存在本机的 `~/.keysmith-switch/`，也没有统计或遥测。App 联网主要是为了检查更新和读取公告；打开「拓展」后才会读取拓展源。完整列表见[数据与隐私](/docs/privacy/)。",
         },
         {
           q: "怎么确认下载的文件没被篡改？",
@@ -66,7 +66,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "怎么卸载？",
-          a: "macOS 把 App 移到废纸篓，Windows 在「设置 → 应用」里卸载。卸载不会删除 `~/.keysmith-switch/`；想连数据一起删，先在 App 设置里「清除全部数据」。卸载前建议先在 App 里停用各 Agent 的提示词、断开输入替换。",
+          a: "先在 App 里停用各 Agent 的提示词、断开输入替换，Agent 的配置就会还原。然后 macOS 把 App 移到废纸篓，Windows 在「设置 → 应用」里卸载。卸载不会删除 `~/.keysmith-switch/`（提示词库和备份），想彻底删除可以之后手动删掉这个文件夹。",
         },
       ],
     },
@@ -178,7 +178,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Are my prompts uploaded?",
-          a: "No. Prompts live only in `~/.keysmith-switch/` on your computer. The app talks to GitHub only to check for updates and read announcements, and reads the extension source only after you turn Extensions on. The full list is in [Data and privacy](/en/docs/privacy/).",
+          a: "No. Prompts live only in `~/.keysmith-switch/` on your computer, and there are no analytics or telemetry. The app goes online mainly to check for updates and read announcements, and reads the extension source only after you turn Extensions on. The full list is in [Data and privacy](/en/docs/privacy/).",
         },
         {
           q: "How do I check a download wasn't tampered with?",
@@ -212,7 +212,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "How do I uninstall?",
-          a: "On macOS, move the app to the Trash; on Windows, uninstall it from Settings → Apps. Uninstalling keeps `~/.keysmith-switch/`; to remove your data too, use Clear all data in the app's settings first. Before uninstalling, turn off each agent's prompt and disconnect input rewrite in the app.",
+          a: "First turn off each agent's prompt and disconnect input rewrite in the app, so the agents' configuration is put back. Then move the app to the Trash on macOS, or uninstall it from Settings → Apps on Windows. Uninstalling keeps `~/.keysmith-switch/` (your library and backups); to remove it completely, delete that folder by hand afterwards.",
         },
       ],
     },

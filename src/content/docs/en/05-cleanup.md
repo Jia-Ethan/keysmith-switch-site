@@ -47,7 +47,7 @@ Pick one and click **Roll back**. Switch first lists what comes back:
 
 If a rollback would overwrite what's there now, **the current state is saved as a version first**, so the rollback itself can be undone. Logins and session history were deleted by the cleanup and don't come back; sign in again afterwards. If you've already signed in again, your current configuration files aren't overwritten.
 
-Versions are plain files. They aren't in exported backups, and Clear all data doesn't delete them; delete ones you don't need on the Versions page.
+Versions are plain files in `~/.keysmith-switch/snapshots/`. Delete ones you don't need on the Versions page.
 
 ## Input rewrite and cleanup
 

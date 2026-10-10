@@ -6,7 +6,7 @@ order: 8
 page: agents
 ---
 
-Every write is made by that agent's open-source adapter. This is how the current versions behave (adapter versions are pinned to the app). Switch deploys **user-level** settings only and never writes into a project folder.
+Deploys and turn-offs are written by each agent's open-source adapter; emptying memory files during cleanup and the setting input rewrite changes are written by Switch itself, see [How it works](/en/docs/how-it-works/). This is how the current versions behave (adapter versions are pinned to the app). Switch deploys **user-level** settings only and never writes into a project folder.
 
 ## Claude Code · claude-keysmith 7.2
 

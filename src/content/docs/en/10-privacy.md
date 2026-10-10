@@ -17,7 +17,7 @@ page: privacy
 | `~/.keysmith-switch/logs/` | Logs (the relay's is `relay.log`) |
 | `~/.keysmith-switch/input-rewrite/` | Input rewrite's rule snapshot, port and forwarding addresses, and each agent's connection record |
 
-On Windows, `~` is `%USERPROFILE%`. Uninstalling the app **doesn't** delete this folder; only Clear all data in Settings does (versions saved before cleanups excepted).
+On Windows, `~` is `%USERPROFILE%`. Uninstalling the app **doesn't** delete this folder. To remove your data completely, delete it by hand after uninstalling; it also holds the versions saved before cleanups.
 
 ## Network addresses the app contacts
 

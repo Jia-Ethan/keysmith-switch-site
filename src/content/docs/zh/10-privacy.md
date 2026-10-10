@@ -17,7 +17,7 @@ page: privacy
 | `~/.keysmith-switch/logs/` | 日志（中转服务日志为 `relay.log`） |
 | `~/.keysmith-switch/input-rewrite/` | 输入替换的规则快照、端口与转发地址、各 Agent 的连接记录 |
 
-Windows 上的 `~` 是 `%USERPROFILE%`。卸载 App **不会**删除这个文件夹；只有设置里的「清除全部数据」会删除它（清理前保存的版本除外）。
+Windows 上的 `~` 是 `%USERPROFILE%`。卸载 App **不会**删除这个文件夹。想彻底删除数据，可以在卸载后手动删掉它，里面也包括清理前保存的版本。
 
 ## App 会访问的网络地址
 

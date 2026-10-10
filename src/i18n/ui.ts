@@ -121,7 +121,7 @@ const zh = {
     items: [
       {
         title: "适配器负责写",
-        body: "所有写入都经过各 Agent 的开源适配器。Switch 只管提示词库、版本、哈希校验、计划预览和操作记录。",
+        body: "部署和停用都由各 Agent 的开源适配器写入。Switch 负责提示词库、版本、哈希校验、计划预览和操作记录。",
       },
       {
         title: "写入前先备份",
@@ -133,7 +133,7 @@ const zh = {
       },
       {
         title: "提示词不出本机",
-        body: "提示词来自你粘贴的内容或本地文件，不会上传。App 只在检查更新、读取公告时访问 GitHub，没有统计或遥测。",
+        body: "提示词来自你粘贴的内容或本地文件，不会上传，也没有统计或遥测。App 会联网的每一种情况都列在文档里。",
       },
     ],
     more: "工作原理详见文档",
@@ -228,7 +228,7 @@ const zh = {
     inside: [
       {
         title: "一个提示词库",
-        body: "按 Agent 分开管理，带标签、搜索和版本历史。可以导入 Markdown 或 ZIP，也可以导出备份。",
+        body: "按 Agent 分开管理，带标签、搜索和编辑历史。第一次打开时，会找出机器上已有的 Keysmith 提示词，让你选择导入。",
       },
       {
         title: "四个内置适配器",
@@ -415,7 +415,7 @@ const en: Dict = {
     items: [
       {
         title: "Adapters do the writing",
-        body: "Every write goes through each agent's open-source adapter. Switch keeps the library, versions, hash checks, plan previews and the operation log.",
+        body: "Deploys and turn-offs are written by each agent's open-source adapter. Switch keeps the library, versions, hash checks, plan previews and the operation log.",
       },
       {
         title: "Backed up before it's written",
@@ -427,7 +427,7 @@ const en: Dict = {
       },
       {
         title: "Prompts stay on your computer",
-        body: "Prompts come from what you paste or local files, and are never uploaded. The app talks to GitHub only to check for updates and read announcements. No analytics, no telemetry.",
+        body: "Prompts come from what you paste or local files and are never uploaded. No analytics, no telemetry; every case where the app goes online is listed in the docs.",
       },
     ],
     more: "How it works, in the docs",
@@ -522,7 +522,7 @@ const en: Dict = {
     inside: [
       {
         title: "A prompt library",
-        body: "Kept per agent, with tags, search and version history. Import Markdown or a ZIP, and export a backup.",
+        body: "Kept per agent, with tags, search and edit history. On first launch it finds Keysmith prompts already on your computer and lets you choose which to import.",
       },
       {
         title: "Four bundled adapters",
