@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 import keyMark from "../assets/brand/key-mark.svg?raw";
 import { t, href, swapLang, type Lang } from "../i18n/ui";
-import { REPO, REPOS, DISCUSSIONS, LINUXDO, stars } from "../lib/release";
+import { REPO, REPOS, DISCUSSIONS, LINUXDO, TELEGRAM, stars } from "../lib/release";
 
 interface Props {
   lang: Lang;
@@ -51,6 +51,7 @@ const docsOn = active === "docs" || active === "changelog" || active === "help";
             <a class="nm-row" href={REPO} target="_blank" rel="noopener">{d.github}<small>★ {starCount}</small></a>
             <a class="nm-row" href={DISCUSSIONS} target="_blank" rel="noopener">{d.discussions}</a>
             <a class="nm-row" href={LINUXDO} target="_blank" rel="noopener">{d.linuxdo}</a>
+            <a class="nm-row" href={TELEGRAM} target="_blank" rel="noopener">{d.telegram}</a>
           </div>
         </div>
       </div>
@@ -84,6 +85,7 @@ const docsOn = active === "docs" || active === "changelog" || active === "help";
     <a class="dr-row" href={REPO} target="_blank" rel="noopener">{d.github}<small class="mono">★ {starCount}</small></a>
     <a class="dr-row" href={DISCUSSIONS} target="_blank" rel="noopener">{d.discussions}</a>
     <a class="dr-row" href={LINUXDO} target="_blank" rel="noopener">{d.linuxdo}</a>
+    <a class="dr-row" href={TELEGRAM} target="_blank" rel="noopener">{d.telegram}</a>
     <div class="dr-pref">
       <span class="dr-pref-k">{d.theme}</span>
       <button type="button" data-set-theme="light" aria-pressed="false">{d.themeLight}</button>

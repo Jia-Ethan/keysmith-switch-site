@@ -14,6 +14,7 @@ export const REPO = "https://github.com/Jia-Ethan/keysmith-switch";
 export const DISCUSSIONS = "https://github.com/Jia-Ethan/keysmith-switch/discussions/3";
 export const EXTENSIONS_REPO = "https://github.com/Jia-Ethan/keysmith-switch-extensions";
 export const LINUXDO = "https://linux.do";
+export const TELEGRAM = "https://t.me/+xBqLYA65JPU1NjFk";
 
 export function version(rel: Release = LATEST): string {
   return rel.tag.replace(/^v/, "");

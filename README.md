@@ -18,6 +18,10 @@ node scripts/check-dist.mjs   # 检查 dist/ 里的链接、资源与中英文�
 SITE_URL=https://jia-ethan.github.io BASE_PATH=/keysmith-switch-site npm run build
 ```
 
+## 部署
+
+推送到 `main` 后，GitHub Actions（`.github/workflows/deploy.yml`）会同步发布数据、构建、检查链接，再发布到 GitHub Pages。每天还会自动重建一次，拿到新版本和星标数；在 Actions 页也可以手动运行。站点地址和路径由 Pages 设置决定，换成自定义域名时不用改代码。
+
 ## 内容从哪里来
 
 | 内容 | 来源 | 更新方式 |

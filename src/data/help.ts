@@ -142,7 +142,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "怎么反馈问题或提需求？",
-          a: "在 App 的「设置 → 关于」里点「问题上报」或「提需求」，会打开预填好的 GitHub 表单，你检查后提交。也可以到 [GitHub Discussions](https://github.com/Jia-Ethan/keysmith-switch/discussions/3) 留言，或在 [LINUX DO](https://linux.do) 社区讨论。",
+          a: "在 App 的「设置 → 关于」里点「问题上报」或「提需求」，会打开预填好的 GitHub 表单，你检查后提交。也可以到 [GitHub Discussions](https://github.com/Jia-Ethan/keysmith-switch/discussions/3) 留言，或在 [LINUX DO](https://linux.do) 社区、[Telegram 交流群](https://t.me/+xBqLYA65JPU1NjFk) 里讨论。",
         },
         {
           q: "反馈时要注意什么？",
@@ -288,7 +288,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "How do I report a problem or ask for a feature?",
-          a: "In the app, open Settings → About and choose Report a problem or Request a feature; a prefilled GitHub form opens for you to review and submit. You can also post in [GitHub Discussions](https://github.com/Jia-Ethan/keysmith-switch/discussions/3) or join the conversation on [LINUX DO](https://linux.do).",
+          a: "In the app, open Settings → About and choose Report a problem or Request a feature; a prefilled GitHub form opens for you to review and submit. You can also post in [GitHub Discussions](https://github.com/Jia-Ethan/keysmith-switch/discussions/3), or join the conversation on [LINUX DO](https://linux.do) or in the [Telegram group](https://t.me/+xBqLYA65JPU1NjFk).",
         },
         {
           q: "What should I leave out of feedback?",

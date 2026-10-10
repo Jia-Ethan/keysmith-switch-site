@@ -1,7 +1,7 @@
 ---
 import keyMark from "../assets/brand/key-mark.svg?raw";
 import { t, href, type Lang } from "../i18n/ui";
-import { REPO, RELEASES_PAGE, DISCUSSIONS, LINUXDO, EXTENSIONS_REPO } from "../lib/release";
+import { REPO, RELEASES_PAGE, DISCUSSIONS, LINUXDO, TELEGRAM } from "../lib/release";
 
 interface Props {
   lang: Lang;
@@ -49,7 +49,7 @@ const year = new Date().getFullYear();
           <a href={REPO} target="_blank" rel="noopener">GitHub</a>
           <a href={DISCUSSIONS} target="_blank" rel="noopener">{d.nav.discussions}</a>
           <a href={LINUXDO} target="_blank" rel="noopener">LINUX DO</a>
-          <a href={EXTENSIONS_REPO} target="_blank" rel="noopener">{f.extensions}</a>
+          <a href={TELEGRAM} target="_blank" rel="noopener">Telegram</a>
         </div>
       </div>
     </div>
