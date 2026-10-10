@@ -8,20 +8,11 @@ page: quickstart
 
 ## 安装 Keysmith Switch
 
-Keysmith Switch 是一个桌面 App，支持 macOS（Apple Silicon，macOS 12 及以上）和 Windows（10 / 11，x64）。四个 Agent 的适配器都已经打包在 App 里，不需要另外安装 Python 或其他依赖。
+Keysmith Switch 是一个桌面 App，支持 macOS（Apple Silicon，macOS 12 及以上）和 Windows（10 / 11，x64）。四个 Agent 的适配器都已经装在 App 里，不需要另外安装任何东西。
 
-1. **下载安装包。** 从[下载页](/download/)获取当前稳定版：macOS 是 `.dmg`，Windows 是 `-setup.exe`。所有安装包都发布在公开仓库 `keysmith-switch-releases` 里，同一版本的每个入口拿到的是同一个文件。
-2. **打开它。** macOS：把 Keysmith Switch 拖进「应用程序」。安装包没有经过 Apple 公证，第一次打开会被拦下：打开「系统设置 → 隐私与安全性」，在页面下方点「仍要打开」并确认。Windows：运行安装程序，如果 SmartScreen 提示「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」。安装在当前用户目录，不需要管理员权限。
-3. **校验文件（可选）。** 每个版本都附带 `SHA256SUMS.txt`，打开安装包之前可以先比对。
-
-```bash
-# macOS
-shasum -a 256 ~/Downloads/Keysmith.Switch_*_aarch64.dmg
-# Windows（PowerShell）
-Get-FileHash .\Keysmith.Switch_*_x64-setup.exe -Algorithm SHA256
-```
-
-> 安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。应用内更新用独立的 minisign 密钥签名，这不是平台代码签名。
+1. **下载安装包。** 从[下载页](/download/)获取当前稳定版：macOS 是 `.dmg`，Windows 是 `-setup.exe`。请只从本站或 GitHub 上的官方发布页下载。
+2. **打开它。** macOS：把 Keysmith Switch 拖进「应用程序」。第一次打开会被拦一下：打开「系统设置 → 隐私与安全性」，在页面下方点「仍要打开」并确认。Windows：运行安装程序，如果提示「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」。它装在你自己的用户目录下，不需要管理员权限。
+3. **杀毒软件报毒？** 少数杀毒软件可能误报。从官方地址下载的就是误报：在隔离区里恢复文件，再把 Keysmith Switch 加入信任区（白名单）。
 
 ## 第一次启动
 

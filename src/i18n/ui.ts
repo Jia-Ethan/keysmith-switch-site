@@ -109,7 +109,7 @@ const zh = {
       {
         id: "updates",
         title: "公告与应用内更新",
-        body: "铃铛里看公告，重要的会置顶。有新版本时设置处出现红点，更新包安装前会先校验签名。",
+        body: "铃铛里看公告，重要的会置顶。有新版本时设置处出现红点，点一下就能更新，装不装由你确认。",
       },
     ],
   },
@@ -121,7 +121,7 @@ const zh = {
     items: [
       {
         title: "适配器负责写",
-        body: "部署和停用都由各 Agent 的开源适配器写入。Switch 负责提示词库、版本、哈希校验、计划预览和操作记录。",
+        body: "部署和停用都由各 Agent 的开源适配器写入。Switch 负责管理提示词库、版本、部署计划和操作记录。",
       },
       {
         title: "写入前先备份",
@@ -151,7 +151,7 @@ const zh = {
           "提示词写进 ~/.claude/keysmith/，CLAUDE.md 里加一段带标记的导入块",
           "停用时只移除这一段，你写的其他内容不动",
           "清理可以清空 CLAUDE.md，要先勾选确认，动手前存版本",
-          "输入替换只改 settings.json 里的 ANTHROPIC_BASE_URL",
+          "输入替换只改 settings.json 里的一项地址",
         ],
         no: ["输入替换不支持 Bedrock 和 Vertex"],
         files: ["CLAUDE.md", "keysmith/", "settings.json"],
@@ -162,9 +162,9 @@ const zh = {
           "提示词放进 ~/.codex/，config.toml 写入 model_instructions_file",
           "写入前备份 config.toml；会干扰加载的 hooks.json 先隔离并留备份",
           "清理可以清空 AGENTS.md；memories 文件夹要单独勾选",
-          "输入替换新增一个 keysmith-relay provider，原来的 provider 不改",
+          "输入替换新增一个 provider，原来的不改",
         ],
-        no: ["输入替换需要自定义 provider（wire_api = \"responses\"）"],
+        no: ["输入替换需要使用自定义 provider"],
         files: ["config.toml", "AGENTS.md", "memories/", "hooks.json"],
       },
       grok: {
@@ -173,7 +173,7 @@ const zh = {
           "提示词写进 ~/.grok/rules/99-keysmith.md，每个 Grok 会话都会读取",
           "在 config.toml 里用一段标记关闭 Claude / Cursor 兼容层，并隔离 hooks",
           "停用时只移除自己写入的文件和标记段",
-          "输入替换在一对标记之间给每个模型写 base_url",
+          "输入替换在一对标记之间为每个模型写入转发地址",
         ],
         no: ["输入替换要先运行一次 Grok，让它拉取模型列表"],
         files: ["rules/99-keysmith.md", "config.toml", "hooks/"],
@@ -182,12 +182,12 @@ const zh = {
         who: "作为真正的 system 角色生效",
         yes: [
           "提示词写进 ~/.zcode-keysmith/system-role.md，作为 system 角色生效",
-          "新版 ZCode 会先备份 zcode.cjs 再修补，停用时还原",
-          "macOS 用 LaunchAgent 设置环境变量，Windows 用用户环境变量",
-          "输入替换改 provider_config.json 里个人 provider 的 baseUrl",
+          "新版 ZCode 需要改动它自带的一个文件，改之前先备份，停用时还原",
+          "会设置几项环境变量，停用时恢复原来的值",
+          "输入替换改 provider_config.json 里的服务地址",
         ],
         no: ["输入替换不支持账号登录的 Coding Plan"],
-        files: ["system-role.md", "zcode.cjs", "provider_config.json"],
+        files: ["system-role.md", "provider_config.json"],
       },
     },
   },
@@ -210,7 +210,7 @@ const zh = {
   download: {
     title: "下载",
     h1: [{ t: "Keysmith Switch，" }, { t: "适用于 macOS 与 Windows", em: true }] as Seg[],
-    lead: "原生桌面应用，基于 Tauri 2 构建。四个 Agent 的适配器都已内置，不需要另装 Python 或其他依赖。",
+    lead: "原生桌面应用，支持 macOS 与 Windows。四个 Agent 的适配器都已装在 App 里，装好就能用，不需要另外安装任何东西。",
     noteLead: "不用注册，也不用登录。",
     note: "装好打开就能用。提示词库保存在本机的 ~/.keysmith-switch/，卸载 App 也不会删除它。",
     tourLink: "看看产品导览",
@@ -222,7 +222,7 @@ const zh = {
     notYet: "暂不提供",
     macSpec: "Apple Silicon / macOS 12+",
     winSpec: "Windows 10 / 11 / x64",
-    other: "校验与历史版本",
+    other: "历史版本",
     allReleases: "全部版本",
     insideTitle: "装好之后有什么",
     inside: [
@@ -232,26 +232,28 @@ const zh = {
       },
       {
         title: "四个内置适配器",
-        body: "claude-keysmith、codex-keysmith、grok-keysmith、zcode-keysmith 都已内置，版本和 App 锁定在一起。",
+        body: "Claude Code、Codex、Grok Build、ZCode 的适配器都随 App 一起安装和更新，不需要单独下载。",
       },
       {
         title: "应用内更新",
-        body: "有新版本时设置处出现红点。更新包用独立的 minisign 密钥签名，安装前先校验，装不装由你确认。",
+        body: "有新版本时设置处出现红点，点一下就能更新，装不装由你确认。提示词库不受影响。",
       },
     ],
-    verify: "用 SHA256SUMS 校验",
     firstOpen: [
       {
         label: "macOS / 第一次打开",
-        body: "安装包没有经过 Apple 公证，第一次打开时 macOS 会拦下来。打开「系统设置 → 隐私与安全性」，在页面下方找到 Keysmith Switch，点「仍要打开」并确认，之后就能正常打开。macOS 14 及更早版本也可以在「应用程序」里右键点它，选「打开」。",
+        body: "第一次打开时，macOS 可能提示无法打开，或无法验证开发者。打开「系统设置 → 隐私与安全性」，在页面下方找到 Keysmith Switch，点「仍要打开」并确认，之后就能正常打开。macOS 14 及更早版本也可以在「应用程序」里右键点它，选「打开」。",
       },
       {
-        label: "Windows / SmartScreen",
-        body: "安装包没有 Authenticode 签名，SmartScreen 可能提示「Windows 已保护你的电脑」。点「更多信息」，再点「仍要运行」即可。安装在当前用户目录，不需要管理员权限。",
+        label: "Windows / 安装提示",
+        body: "Windows 可能弹出「Windows 已保护你的电脑」。点「更多信息」，再点「仍要运行」即可。它装在你自己的用户目录下，不需要管理员权限。",
+      },
+      {
+        label: "杀毒软件 / 误报",
+        body: "少数杀毒软件可能把 Keysmith Switch 误报为病毒。从本页下载的就是误报：在杀毒软件的隔离区里恢复文件，再把 Keysmith Switch 加入信任区（白名单）即可。不确定的话，到 GitHub 上留言问我们。",
       },
     ],
-    signNote:
-      "安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。应用内更新用独立的生产 minisign 密钥签名，这不是平台代码签名。请用 SHA256SUMS 校验下载的文件。",
+    signNote: "安装包只在本页和 GitHub 上的官方发布页提供。从其他地方拿到的安装包，请不要打开。",
     agentTitle: "复制给智能体安装",
     agentPrompt:
       "请先阅读 https://github.com/Jia-Ethan/keysmith-switch 的 README 与发布边界，再从公开 Releases 安装当前稳定版。操作前检查系统架构、现有版本和数据目录，列出准确的下载、安装与备份路径；覆盖现有应用或写入托管配置前等待确认。安装后最小验证安装包 SHA-256、应用启动、既有提示词数据和“检查更新”。除非明确要求，不要从源码构建。",
@@ -403,7 +405,7 @@ const en: Dict = {
       {
         id: "updates",
         title: "Announcements and in-app updates",
-        body: "Announcements arrive under the bell, and important ones are pinned. A red dot in Settings means a new version; update packages are signature-checked before they install.",
+        body: "Announcements arrive under the bell, and important ones are pinned. A red dot in Settings means a new version is out; one click updates, and only when you say so.",
       },
     ],
   },
@@ -415,7 +417,7 @@ const en: Dict = {
     items: [
       {
         title: "Adapters do the writing",
-        body: "Deploys and turn-offs are written by each agent's open-source adapter. Switch keeps the library, versions, hash checks, plan previews and the operation log.",
+        body: "Deploys and turn-offs are written by each agent's open-source adapter. Switch looks after the library, versions, deploy plans and the record of what it did.",
       },
       {
         title: "Backed up before it's written",
@@ -445,7 +447,7 @@ const en: Dict = {
           "The prompt goes in ~/.claude/keysmith/, imported by a marked block in CLAUDE.md",
           "Turning it off removes only that block; the rest of the file stays",
           "Clean up can empty CLAUDE.md, after you tick a box, with a version saved first",
-          "Input rewrite changes only ANTHROPIC_BASE_URL in settings.json",
+          "Input rewrite changes only one address in settings.json",
         ],
         no: ["Input rewrite does not support Bedrock or Vertex"],
         files: ["CLAUDE.md", "keysmith/", "settings.json"],
@@ -456,9 +458,9 @@ const en: Dict = {
           "The prompt goes in ~/.codex/ and config.toml gets model_instructions_file",
           "config.toml is backed up first; a hooks.json that would interfere is set aside with a backup",
           "Clean up can empty AGENTS.md; the memories folder needs its own checkbox",
-          "Input rewrite adds a keysmith-relay provider and leaves yours unchanged",
+          "Input rewrite adds a provider and leaves yours unchanged",
         ],
-        no: ["Input rewrite needs a custom provider (wire_api = \"responses\")"],
+        no: ["Input rewrite needs a custom provider"],
         files: ["config.toml", "AGENTS.md", "memories/", "hooks.json"],
       },
       grok: {
@@ -467,7 +469,7 @@ const en: Dict = {
           "The prompt goes in ~/.grok/rules/99-keysmith.md, read by every Grok session",
           "A marked block in config.toml turns off the Claude / Cursor compat layers and sets hooks aside",
           "Turning it off removes only the file and block it wrote",
-          "Input rewrite writes each model's base_url between a pair of markers",
+          "Input rewrite writes each model's forwarding address between a pair of markers",
         ],
         no: ["Input rewrite needs Grok to have run once and fetched its model list"],
         files: ["rules/99-keysmith.md", "config.toml", "hooks/"],
@@ -476,12 +478,12 @@ const en: Dict = {
         who: "Applied as a true system role",
         yes: [
           "The prompt goes in ~/.zcode-keysmith/system-role.md and acts as the system role",
-          "On newer ZCode builds, zcode.cjs is backed up, then patched, and restored when turned off",
-          "Environment variables come from a LaunchAgent on macOS and user variables on Windows",
-          "Input rewrite changes baseUrl of each personal provider in provider_config.json",
+          "Newer ZCode builds need one of ZCode's own files changed; it's backed up first and restored when turned off",
+          "A few environment variables are set and put back when turned off",
+          "Input rewrite changes the service address in provider_config.json",
         ],
         no: ["Input rewrite does not support Coding Plan sign-in"],
-        files: ["system-role.md", "zcode.cjs", "provider_config.json"],
+        files: ["system-role.md", "provider_config.json"],
       },
     },
   },
@@ -504,7 +506,7 @@ const en: Dict = {
   download: {
     title: "Download",
     h1: [{ t: "Keysmith Switch for " }, { t: "macOS and Windows", em: true }],
-    lead: "A native desktop app built on Tauri 2. The four agent adapters ship inside it, so there's no Python or anything else to install.",
+    lead: "A native desktop app for macOS and Windows. The adapters for all four agents come inside it, so it works as soon as it's installed; there's nothing else to set up.",
     noteLead: "No account, no sign-in.",
     note: "Install it and open it. Your library lives in ~/.keysmith-switch/ on your computer and stays there even if you uninstall the app.",
     tourLink: "See the product tour",
@@ -516,7 +518,7 @@ const en: Dict = {
     notYet: "Not available yet",
     macSpec: "Apple Silicon / macOS 12+",
     winSpec: "Windows 10 / 11 / x64",
-    other: "Checksums and past releases",
+    other: "Past releases",
     allReleases: "All releases",
     insideTitle: "What's inside",
     inside: [
@@ -525,27 +527,29 @@ const en: Dict = {
         body: "Kept per agent, with tags, search and edit history. On first launch it finds Keysmith prompts already on your computer and lets you choose which to import.",
       },
       {
-        title: "Four bundled adapters",
-        body: "claude-keysmith, codex-keysmith, grok-keysmith and zcode-keysmith ship inside, pinned to the app version.",
+        title: "Four built-in adapters",
+        body: "The adapters for Claude Code, Codex, Grok Build and ZCode install and update with the app; there's nothing to download separately.",
       },
       {
         title: "In-app updates",
-        body: "A red dot in Settings means a new version is out. Updates are signed with a separate minisign key, checked before they install, and only install when you confirm.",
+        body: "A red dot in Settings means a new version is out. One click updates, and only when you say so. Your library stays as it is.",
       },
     ],
-    verify: "Verify with SHA256SUMS",
     firstOpen: [
       {
         label: "macOS / First launch",
-        body: "The app isn't notarized by Apple, so macOS stops it the first time. Open System Settings → Privacy & Security, find Keysmith Switch near the bottom, click Open Anyway and confirm. After that it opens normally. On macOS 14 and earlier you can also right-click it in Applications and choose Open.",
+        body: "The first time, macOS may say the app can't be opened or that its developer can't be verified. Open System Settings → Privacy & Security, find Keysmith Switch near the bottom, click Open Anyway and confirm. After that it opens normally. On macOS 14 and earlier you can also right-click it in Applications and choose Open.",
       },
       {
-        label: "Windows / SmartScreen",
-        body: "The installer has no Authenticode signature, so SmartScreen may say “Windows protected your PC”. Click More info, then Run anyway. It installs for the current user and doesn't need administrator rights.",
+        label: "Windows / Install warning",
+        body: "Windows may show “Windows protected your PC”. Click More info, then Run anyway. It installs into your own user folder and doesn't need administrator rights.",
+      },
+      {
+        label: "Antivirus / False alarms",
+        body: "A few antivirus programs may flag Keysmith Switch by mistake. If you downloaded it from this page, it's a false alarm: restore the file from quarantine and add Keysmith Switch to the trusted list (allowlist). Not sure? Ask us on GitHub.",
       },
     ],
-    signNote:
-      "The installers are not signed with an Apple Developer ID, notarized, or signed with Windows Authenticode. In-app updates are signed with a separate production minisign key, which is not platform code signing. Check downloads against SHA256SUMS.",
+    signNote: "Installers are only offered on this page and the official GitHub releases page. Don't open an installer you got anywhere else.",
     agentTitle: "Have your agent install it",
     agentPrompt:
       "Read the README and release boundaries at https://github.com/Jia-Ethan/keysmith-switch first, then install the current stable version from the public Releases. Before acting, check the system architecture, any existing version and the data folder, and list the exact download, install and backup paths; wait for confirmation before replacing an existing app or writing managed configuration. After installing, do a minimal check of the installer's SHA-256, that the app starts, that existing prompt data is intact, and “Check for updates”. Do not build from source unless asked.",

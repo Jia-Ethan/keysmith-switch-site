@@ -8,20 +8,11 @@ page: quickstart
 
 ## Install Keysmith Switch
 
-Keysmith Switch is a desktop app for macOS (Apple Silicon, macOS 12 or later) and Windows (10 / 11, x64). The four agent adapters ship inside the app, so there's no Python or anything else to install.
+Keysmith Switch is a desktop app for macOS (Apple Silicon, macOS 12 or later) and Windows (10 / 11, x64). The adapters for all four agents come inside the app, so there's nothing else to install.
 
-1. **Download the installer.** Get the current stable version from the [download page](/en/download/): a `.dmg` for macOS, a `-setup.exe` for Windows. Every installer is published in the public `keysmith-switch-releases` repository, so every entry point hands out the same file for a version.
-2. **Open it.** On macOS, drag Keysmith Switch into Applications. The app isn't notarized by Apple, so macOS stops it the first time: open System Settings → Privacy & Security and click Open Anyway near the bottom. On Windows, run the installer; if SmartScreen says “Windows protected your PC”, click More info → Run anyway. It installs for the current user and doesn't need administrator rights.
-3. **Verify the file (optional).** Every release includes `SHA256SUMS.txt`. Compare before you open anything.
-
-```bash
-# macOS
-shasum -a 256 ~/Downloads/Keysmith.Switch_*_aarch64.dmg
-# Windows (PowerShell)
-Get-FileHash .\Keysmith.Switch_*_x64-setup.exe -Algorithm SHA256
-```
-
-> The installers are not signed with an Apple Developer ID, notarized, or signed with Windows Authenticode. In-app updates are signed with a separate minisign key, which is not platform code signing.
+1. **Download the installer.** Get the current stable version from the [download page](/en/download/): a `.dmg` for macOS, a `-setup.exe` for Windows. Only download from this site or the official GitHub releases page.
+2. **Open it.** On macOS, drag Keysmith Switch into Applications. macOS stops it the first time: open System Settings → Privacy & Security and click Open Anyway near the bottom. On Windows, run the installer; if it says “Windows protected your PC”, click More info → Run anyway. It installs into your own user folder and doesn't need administrator rights.
+3. **Antivirus warning?** A few antivirus programs may flag it by mistake. If you downloaded it from an official address, it's a false alarm: restore the file from quarantine and add Keysmith Switch to the trusted list (allowlist).
 
 ## First launch
 

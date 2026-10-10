@@ -15,7 +15,6 @@ const p = d.download;
 const v = version();
 const mac = findAsset(LATEST, "mac");
 const win = findAsset(LATEST, "win");
-const sums = findAsset(LATEST, "sums");
 ---
 
 <Base lang={lang} title={p.title} active="download">
@@ -69,7 +68,6 @@ const sums = findAsset(LATEST, "sums");
       </div>
       <p class="dl-alt">
         <span class="dl-alt-k">{p.other}</span>
-        <a data-dl="sums" href={sums?.url ?? RELEASES_PAGE}>SHA256SUMS.txt</a>
         <a href={RELEASES_PAGE} target="_blank" rel="noopener">{p.allReleases}</a>
         <a href={REPO} target="_blank" rel="noopener">{d.footer.source}</a>
       </p>
@@ -88,7 +86,6 @@ const sums = findAsset(LATEST, "sums");
         ))
       }
     </div>
-    <a class="link-more dl-verify" data-dl="sums" href={sums?.url ?? RELEASES_PAGE}><span>{p.verify}</span></a>
 
     <div class="dl-first">
       {
@@ -232,13 +229,10 @@ const sums = findAsset(LATEST, "sums");
   .dl-inside .cols {
     margin-top: 40px;
   }
-  .dl-verify {
-    margin-top: 40px;
-  }
   .dl-first {
     display: grid;
     gap: 28px;
-    margin-top: 28px;
+    margin-top: 48px;
     padding-top: 28px;
     border-top: 1px solid var(--line-2);
   }

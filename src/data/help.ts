@@ -35,8 +35,8 @@ export const HELP: Record<Lang, HelpSection[]> = {
           a: "不会。提示词只存在本机的 `~/.keysmith-switch/`，也没有统计或遥测。App 联网主要是为了检查更新和读取公告；打开「拓展」后才会读取拓展源。完整列表见[数据与隐私](/docs/privacy/)。",
         },
         {
-          q: "怎么确认下载的文件没被篡改？",
-          a: "每个版本都附带 `SHA256SUMS.txt`，打开安装包之前比对一下哈希即可。命令见[快速上手](/docs/quickstart/)。",
+          q: "从哪里下载才安全？",
+          a: "只从本站的[下载页](/download/)或 GitHub 上的官方发布页下载。从其他地方拿到的安装包，请不要打开。",
         },
       ],
     },
@@ -46,23 +46,23 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "macOS 提示「无法打开」或「无法验证开发者」",
-          a: "安装包没有经过 Apple 公证，第一次打开会被拦下。打开「系统设置 → 隐私与安全性」，在页面下方找到 Keysmith Switch，点「仍要打开」并确认。macOS 14 及更早版本也可以在「应用程序」里右键点它，选「打开」。只需要做一次。",
+          a: "第一次打开时 macOS 会拦一下。打开「系统设置 → 隐私与安全性」，在页面下方找到 Keysmith Switch，点「仍要打开」并确认。macOS 14 及更早版本也可以在「应用程序」里右键点它，选「打开」。只需要做一次。",
         },
         {
           q: "Windows 提示「Windows 已保护你的电脑」",
-          a: "安装包没有 Authenticode 签名，SmartScreen 会提示。点「更多信息」，再点「仍要运行」。安装在当前用户目录，不需要管理员权限。",
+          a: "点「更多信息」，再点「仍要运行」。它装在你自己的用户目录下，不需要管理员权限。",
         },
         {
           q: "杀毒软件报毒怎么办？",
-          a: "适配器是用 PyInstaller 打包的 Python 程序，部分杀毒软件会启发式误报。请先用 `SHA256SUMS.txt` 核对安装包，确认来自官方 Releases；仍有疑问可以在 GitHub 上查看源码和构建流程。",
+          a: "从本站或 GitHub 官方发布页下载的，就是误报。在杀毒软件的隔离区里恢复文件，再把 Keysmith Switch 加入信任区（白名单）即可。不确定的话，到 [GitHub](https://github.com/Jia-Ethan/keysmith-switch/discussions/3) 上留言问我们。",
         },
         {
           q: "怎么更新？",
-          a: "已安装 v0.1.3 及以上的版本，可以在 App 里检查更新，有新版本时设置处会出现红点；更新包安装前会先校验签名，装不装由你确认。也可以随时从[下载页](/download/)下载新版本覆盖安装，提示词库不会受影响。",
+          a: "有新版本时，App 设置处会出现红点，点一下就能更新，装不装由你确认。也可以随时从[下载页](/download/)下载新版本直接安装，提示词库不会受影响。",
         },
         {
           q: "检查更新超时",
-          a: "Windows 上从 v0.3.7 起会读取系统代理，设置了 `https_proxy` 或 `all_proxy` 时优先使用环境变量。更早的版本检查更新不走代理，请手动下载新版本安装一次，之后的更新就会正常。",
+          a: "如果你用的是 v0.3.7 之前的版本，而且电脑开着代理，检查更新可能会超时。到[下载页](/download/)下载新版本手动安装一次，之后的更新就正常了。",
         },
         {
           q: "怎么卸载？",
@@ -88,7 +88,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Windows 上提示权限不足",
-          a: "当前用户对 Agent 的主目录没有完全控制权限（Windows ACL 限制）。授予完全控制权限后重试。",
+          a: "你的 Windows 账户没有这个 Agent 文件夹的完全控制权限。给这个文件夹加上「完全控制」权限后再试一次。",
         },
         {
           q: "编辑了正在用的提示词，Agent 里没变",
@@ -128,11 +128,11 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "为什么显示「被绕过」？",
-          a: "其他工具改过 Switch 写入的那一项，例如切换了 Codex 的 provider，或改了 Claude Code 的 `ANTHROPIC_BASE_URL`。点「重新连接」即可。",
+          a: "有别的工具改了 Switch 写进去的那项设置，例如切换了 Codex 的 provider，或改了 Claude Code 的接口地址。点「重新连接」即可。",
         },
         {
           q: "为什么我的 Agent 不能连接？",
-          a: "目前的限制：Claude Code 不支持 Bedrock 和 Vertex；Codex 需要自定义 provider（`wire_api = \"responses\"`）；ZCode 不支持账号登录的 Coding Plan；Grok Build 要先运行过一次。",
+          a: "目前的限制：Claude Code 不支持 Bedrock 和 Vertex；Codex 需要使用自定义 provider，不能用内置的 OpenAI 登录；ZCode 不支持账号登录的 Coding Plan；Grok Build 要先运行过一次。",
         },
       ],
     },
@@ -181,8 +181,8 @@ export const HELP: Record<Lang, HelpSection[]> = {
           a: "No. Prompts live only in `~/.keysmith-switch/` on your computer, and there are no analytics or telemetry. The app goes online mainly to check for updates and read announcements, and reads the extension source only after you turn Extensions on. The full list is in [Data and privacy](/en/docs/privacy/).",
         },
         {
-          q: "How do I check a download wasn't tampered with?",
-          a: "Every release includes `SHA256SUMS.txt`; compare the hash before opening the installer. The commands are in the [Quickstart](/en/docs/quickstart/).",
+          q: "Where is it safe to download?",
+          a: "Only from this site's [download page](/en/download/) or the official GitHub releases page. Don't open an installer you got anywhere else.",
         },
       ],
     },
@@ -192,23 +192,23 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "macOS says it can't be opened or verified",
-          a: "The app isn't notarized by Apple, so macOS stops it the first time. Open System Settings → Privacy & Security, find Keysmith Switch near the bottom, click Open Anyway and confirm. On macOS 14 and earlier you can also right-click it in Applications and choose Open. You only do this once.",
+          a: "macOS stops the app the first time. Open System Settings → Privacy & Security, find Keysmith Switch near the bottom, click Open Anyway and confirm. On macOS 14 and earlier you can also right-click it in Applications and choose Open. You only do this once.",
         },
         {
           q: "Windows says “Windows protected your PC”",
-          a: "The installer has no Authenticode signature, so SmartScreen warns. Click More info, then Run anyway. It installs for the current user without administrator rights.",
+          a: "Click More info, then Run anyway. It installs into your own user folder and doesn't need administrator rights.",
         },
         {
           q: "My antivirus flags it",
-          a: "The adapters are Python programs packaged with PyInstaller, which some antivirus heuristics flag by mistake. Check the installer against `SHA256SUMS.txt` to confirm it came from the official Releases; the source and build pipeline are on GitHub if you want to look further.",
+          a: "If you downloaded it from this site or the official GitHub releases page, it's a false alarm. Restore the file from quarantine and add Keysmith Switch to the trusted list (allowlist). Not sure? Ask us on [GitHub](https://github.com/Jia-Ethan/keysmith-switch/discussions/3).",
         },
         {
           q: "How do I update?",
-          a: "From v0.1.3 on, check for updates in the app; a red dot in Settings means a new version is out. Updates are signature-checked before installing, and only install when you confirm. You can also download a new version from the [download page](/en/download/) and install over the old one; your library is unaffected.",
+          a: "When a new version is out, a red dot appears in Settings; one click updates, and only when you say so. You can also download the new version from the [download page](/en/download/) and install it; your library is unaffected.",
         },
         {
           q: "Checking for updates times out",
-          a: "On Windows, from v0.3.7 on, the system proxy is used, and `https_proxy` or `all_proxy` take priority when set. Earlier versions check without a proxy; download and install a new version by hand once, and later updates work.",
+          a: "On versions before v0.3.7 with a proxy turned on, checking for updates can time out. Download the new version from the [download page](/en/download/) and install it once by hand; later updates then work.",
         },
         {
           q: "How do I uninstall?",
@@ -234,7 +234,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Windows says permission denied",
-          a: "The current user lacks Full Control of the agent's folder (a Windows ACL restriction). Grant Full Control and try again.",
+          a: "Your Windows account doesn't have full control of that agent's folder. Give it Full control and try again.",
         },
         {
           q: "I edited the live prompt, but the agent didn't change",
@@ -274,11 +274,11 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Why does it say “bypassed”?",
-          a: "Another tool changed the setting Switch wrote, for example switching Codex's provider or changing Claude Code's `ANTHROPIC_BASE_URL`. Click Reconnect.",
+          a: "Another tool changed the setting Switch wrote, for example switching Codex's provider or changing Claude Code's API address. Click Reconnect.",
         },
         {
           q: "Why can't my agent connect?",
-          a: "Current limits: Claude Code doesn't support Bedrock or Vertex; Codex needs a custom provider (`wire_api = \"responses\"`); ZCode doesn't support Coding Plan sign-in; Grok Build must have run once.",
+          a: "Current limits: Claude Code doesn't support Bedrock or Vertex; Codex needs a custom provider rather than its built-in OpenAI sign-in; ZCode doesn't support Coding Plan sign-in; Grok Build must have run once.",
         },
       ],
     },
