@@ -1,0 +1,32 @@
+---
+import claude from "../assets/agents/claude.svg?raw";
+import codex from "../assets/agents/codex.svg?raw";
+import grok from "../assets/agents/grok.svg?raw";
+import zcode from "../assets/agents/zcode.png";
+
+export type AgentId = "claude" | "codex" | "grok" | "zcode";
+interface Props {
+  agent: AgentId;
+  class?: string;
+}
+const { agent, class: cls } = Astro.props;
+const svg = { claude, codex, grok }[agent as "claude" | "codex" | "grok"];
+---
+
+{
+  agent === "zcode" ? (
+    <img class={cls} src={zcode.src} width="18" height="18" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+  ) : (
+    <span class:list={["agent-logo", cls]} aria-hidden="true" set:html={svg} />
+  )
+}
+
+<style>
+  .agent-logo {
+    display: inline-flex;
+  }
+  .agent-logo :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+</style>

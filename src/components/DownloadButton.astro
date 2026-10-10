@@ -1,0 +1,35 @@
+---
+import Icon from "./Icon.astro";
+import { t, type Lang } from "../i18n/ui";
+import { LATEST_PAGE, findAsset, LATEST, mb, version } from "../lib/release";
+
+interface Props {
+  lang: Lang;
+  /** "hero" shows the size hint under the button. */
+  hint?: boolean;
+}
+const { lang, hint = false } = Astro.props;
+const d = t(lang).dl;
+const mac = findAsset(LATEST, "mac");
+const win = findAsset(LATEST, "win");
+const v = version();
+---
+
+<a class="btn-ink" data-os-show="mac other" data-dl="mac" href={mac?.url ?? LATEST_PAGE}>
+  {d.mac}<Icon name="download" />
+</a>
+<a class="btn-ink" data-os-show="win" data-dl="win" href={win?.url ?? LATEST_PAGE}>
+  {d.win}<Icon name="download" />
+</a>
+{
+  hint && (
+    <>
+      <span class="cta-hint" data-os-show="mac other">
+        v<span data-ver>{v}</span> / {d.hintMac} / <span data-size="mac">{mac ? mb(mac.size) : ""}</span>
+      </span>
+      <span class="cta-hint" data-os-show="win">
+        v<span data-ver>{v}</span> / {d.hintWin} / <span data-size="win">{win ? mb(win.size) : ""}</span>
+      </span>
+    </>
+  )
+}

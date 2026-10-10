@@ -1,0 +1,1619 @@
+[
+  {
+    "tag": "v0.6.3",
+    "name": "Keysmith Switch v0.6.3",
+    "date": "2026-10-09T17:09:43Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.6.3",
+    "body": "# Keysmith Switch v0.6.3\n\n修复 Windows 上点切换入口、进设置页时卡顿甚至无响应；操作被拒绝时会直接写出原因，不再只显示 `ok=false`、`exit 1`。\n\n## 这一版有什么\n\n- **Windows 上切换入口、打开设置不再卡住。** 检查更新、读取「关于」里的版本信息、读取输入替换的状态，以前会让窗口等上几秒到几十秒，严重时显示「未响应」。现在这些都在后台进行，界面可以照常操作。\n- **操作被拒绝时会写出原因。** 以前部署或停用被拒绝时，弹窗里有时只有 `ok=false`、`exit 1` 这样的记录，看不出为什么。现在会显示适配器给出的原因，例如 ZCode 找不到自己的安装位置、Grok 找不到部署记录。\n- **Grok Build 清理之后不再一直显示「部署中」。** 配置被手动改过时清理 Grok，部署其实已经清掉了，但 Switch 还把它显示成正在生效，点「停用」会报错。现在清理后会如实显示未部署。已经遇到这个问题的，升级后再点一次「停用」就能恢复正常。\n- **连接输入替换后，Grok Build 的自定义模型不再发出登录令牌。** 如果你自己配置的模型把 Grok 自带的模型当作上游，连接输入替换后，请求会带上 grok.com 的登录令牌，而不是你配置的 `api_key`。现在连接时会把这样的自带模型留在中转之外，页面的详情里会列出；已经连接的，页面会提示重新连接。\n- 「整理配置」的提示只在部署被拒绝时出现，不再出现在整理、停用等其他弹窗里。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本，可以在应用内点「检查更新」升级到 `v0.6.3`，安装仍需你确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.6.3_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.6.3_x64-setup.exe`\n\n安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。更新包用独立的生产 minisign 密钥签名，这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43319807,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.3_aarch64.dmg",
+        "size": 44901830,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/Keysmith.Switch_0.6.3_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.3_x64-setup.exe",
+        "size": 42616966,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/Keysmith.Switch_0.6.3_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.3_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/Keysmith.Switch_0.6.3_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2005,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.3/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.6.2",
+    "name": "Keysmith Switch v0.6.2",
+    "date": "2026-10-08T07:04:35Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.6.2",
+    "body": "# Keysmith Switch v0.6.2\n\n提示词卡片支持右键菜单：删除、复制、复制到其他工具，以及打开、编辑和部署，在列表里就能完成。\n\n## 这一版有什么\n\n- **右键提示词卡片会弹出操作菜单。**\n  - 普通卡片：打开、编辑、部署、复制、复制到其他工具（另外三个 Agent）、删除。删除前仍会弹出确认框。\n  - 正在生效的卡片：「部署」换成「停用」。「删除」暂时不可用，并提示先停用。删掉正在运行的提示词，列表会把它显示成「还没放进提示词库」。\n  - 拓展包里的提示词：只能部署和删除。它们的内容不公开，所以不提供打开、编辑和复制。\n  - 有部署计划在准备或确认时，会改动内容的操作暂时不可用。\n- **提示词详情页的「⋯」菜单使用同样的规则：** 正在生效的提示词不能直接删除，需要先停用。\n- **右键不再弹出系统菜单。** 以前在页面任意位置右键，都会出现「重新载入」等系统菜单项，误点会丢掉快速部署里的草稿和没保存的编辑。现在只有在输入框里和选中的文字上，右键才会出现系统菜单（剪切、复制、粘贴等）。\n- 菜单可以用方向键选择，按 Esc、点空白处、滚动页面或切换窗口都会关闭。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本，可以在应用内点「检查更新」升级到 `v0.6.2`，安装仍需你确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.6.2_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.6.2_x64-setup.exe`\n\n安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。更新包用独立的生产 minisign 密钥签名，这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43178328,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.2_aarch64.dmg",
+        "size": 44718957,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/Keysmith.Switch_0.6.2_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.2_x64-setup.exe",
+        "size": 42508023,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/Keysmith.Switch_0.6.2_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.2_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/Keysmith.Switch_0.6.2_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1986,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.2/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.6.1",
+    "name": "Keysmith Switch v0.6.1",
+    "date": "2026-10-08T02:25:05Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.6.1",
+    "body": "修复 Windows 上部署 Codex 时，权限不足的报错以混合语言显示的问题。设置为中文时，错误提示现在完整本地化并告知解决方法。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43178892,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.1_aarch64.dmg",
+        "size": 44755153,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/Keysmith.Switch_0.6.1_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.1_x64-setup.exe",
+        "size": 42511270,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/Keysmith.Switch_0.6.1_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.1_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/Keysmith.Switch_0.6.1_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1714,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.1/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.6.0",
+    "name": "Keysmith Switch v0.6.0",
+    "date": "2026-10-07T23:19:49Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.6.0",
+    "body": "# Keysmith Switch v0.6.0\n\n「输入替换」现在也支持 **Grok Build**：Claude Code、Codex、ZCode、Grok Build 四个 Agent 都可以用了。\n\n## 这一版有什么\n\n- **Grok Build 也能用输入替换。** 在「输入替换」页点 Grok Build 那一行的「连接…」即可。\n  - 连接前会先告诉你要改什么：在 `~/.grok/config.toml` 的末尾，给 Grok 的每个模型加一张 `[model.\"<id>\"] base_url`，全部放在一对 `# === keysmith-switch input rewrite ===` 标记之间。标记以外的内容不动。\n  - 断开时整段删除，只有这一段仍然是 Keysmith 写入的样子才会删；如果你或其他工具改过，就保持原样。\n  - 用 xAI 账号登录或 API key 都可以连接。账号登录时，登录令牌会经过本机中转，中转服务不保存、不记录它。\n  - 只改你自己打的字，也就是 `<user_query>` 里面的内容。不会改动的内容：\n    - Grok 自带的上下文，例如 `<user_info>`、规则和提醒；\n    - 你用 `@` 引用的文件内容，以及自定义命令展开出来的技能内容；\n    - 以 `/` 开头的斜杠命令；\n    - 会话标题等 Grok 自己发出的辅助请求。\n  - 需要 Grok 先运行过一次（让它拉取过模型列表），之后才能连接。如果 Grok 以后新增了模型，页面会提示重新连接。\n- **适配器更新到 grok-keysmith v0.7.0。** 它把上面那对标记之间的内容视为 Keysmith Switch 的区域：不当成配置被改动，部署、停用、整理配置和中断恢复时都会保留这一段。没有它，连接会被当成漂移而拒绝停用，撤销部署时还会被悄悄删掉。\n- **清理 Grok 之前会先断开它的输入替换**，回滚时恢复的是你原来的配置。\n\n## 目前的限制\n\n- Claude Code 不支持 Bedrock 和 Vertex；ZCode 不支持账号登录的 Coding Plan；Codex 需要使用自定义 provider（`wire_api = \"responses\"`）。\n- Grok 的 `config.toml` 里 Keysmith 的标记区域不能被拆开（只剩开始或结束标记）；出现这种情况时，页面会提示先修好。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本，可以在应用内点「检查更新」升级到 `v0.6.0`，安装仍需你确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.6.0_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.6.0_x64-setup.exe`\n\n安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。更新包用独立的生产 minisign 密钥签名，这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43178878,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.0_aarch64.dmg",
+        "size": 44755320,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/Keysmith.Switch_0.6.0_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.0_x64-setup.exe",
+        "size": 42511659,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/Keysmith.Switch_0.6.0_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.6.0_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/Keysmith.Switch_0.6.0_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1770,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.6.0/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.5.1",
+    "name": "Keysmith Switch v0.5.1",
+    "date": "2026-10-07T12:42:28Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.5.1",
+    "body": "# Keysmith Switch v0.5.1\n\n修复：Grok Build 部署后无法停用（[#95](https://github.com/Jia-Ethan/keysmith-switch/issues/95)）。\n\n## 修了什么\n\n- **Grok Build 可以停用了。** 部署之后如果 `config.toml` 被改过，而且部署前的配置备份也不见了，原来点「停用」会被拒绝，「从备份恢复」显示成功但其实什么都没改，「清理」也会失败。\n  - 现在停用弹窗会说明备份已经找不到，并提供「保留当前配置并停用…」。确认后，`config.toml` 保持你现在的样子，只移除 Keysmith 写入的那一段；提示词文件和 hooks 照常还原。\n  - 只有改动仅限于配置文件本身时才会提供这个选项；如果还有其他改动，仍然会拒绝，不会强行覆盖。\n- **「清理」不再删除 Grok 适配器自己的配置备份。** 之前清理会把 `config.toml.keysmith-backup-*` 当作旧副本一起删掉，这很可能就是备份不见的原因。\n- Grok 适配器更新到 [grok-keysmith v0.6.2](https://github.com/Jia-Ethan/grok-keysmith/releases/tag/v0.6.2)。\n\n已经遇到这个问题的用户：升级后再点一次「停用」即可。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本，可以在应用内点「检查更新」升级到 `v0.5.1`，安装仍需你确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.5.1_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.5.1_x64-setup.exe`\n\n安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。更新包用独立的生产 minisign 密钥签名，这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43149553,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.5.1_aarch64.dmg",
+        "size": 44688615,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/Keysmith.Switch_0.5.1_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.5.1_x64-setup.exe",
+        "size": 42479948,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/Keysmith.Switch_0.5.1_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.5.1_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/Keysmith.Switch_0.5.1_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1839,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.1/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.5.0",
+    "name": "Keysmith Switch v0.5.0",
+    "date": "2026-10-07T07:48:50Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.5.0",
+    "body": "# Keysmith Switch v0.5.0\n\n「输入替换」现在也支持 **Claude Code** 和 **ZCode**，「输入替换」页也重新设计了。\n\n## 这一版有什么\n\n- **Claude Code 和 ZCode 也能用输入替换。** 在「输入替换」页每个 Agent 一行，点「连接…」即可。\n  - 连接前会先告诉你要改哪个文件的哪个字段：\n    - Claude Code：只改 `~/.claude/settings.json` 里的 `env.ANTHROPIC_BASE_URL`。\n    - ZCode：只改 `~/.zcode/v2/provider_config.json` 里每个个人 provider 的地址。\n  - 断开时只改回这一项；如果这期间别的工具改过它，就保持原样。\n  - 用 API key、订阅登录或自定义网关的 Claude Code 都可以连接。订阅登录时，登录令牌会经过本机中转，但中转服务不保存、不记录它。\n  - 只改你自己打的字。不会改动的内容：\n    - Claude Code 的 `<system-reminder>`、工具结果、`!` 命令输出；\n    - ZCode 的技能列表和 AGENTS.md 上下文；\n    - 斜杠命令和它展开出来的模板；\n    - ZCode 子代理发出的请求。\n  - 部署或撤销 Claude Code 提示词不会影响连接。清理某个 Agent 之前，会先断开它的输入替换，这样回滚时恢复的是你原来的地址。\n- **规则可以只对部分 Agent 生效。** 每张规则表都能选择适用于哪些 Agent，默认是全部。规则包也可以面向任意 Agent。\n- **「输入替换」页重新设计。**\n  - 开关改成了开关样式。拓展页的启用和停用也改成了开关。\n  - 每个 Agent 一行，同时显示它的状态和操作。\n  - 不再显示 provider id。\n  - 「断开…」改成醒目的红色按钮。\n  - 规则表支持按 Agent 筛选、搜索、排序和折叠。\n  - 空状态更简洁。\n  - 深色和浅色主题下的状态文字都更清楚。\n\n## 目前的限制\n\n- Grok Build 暂不支持，因为它的 Keysmith 适配器卸载时会把整个 `config.toml` 还原，连接会被一起删掉。等适配器支持后再开放。\n- Claude Code 暂不支持 Bedrock 和 Vertex。Bedrock 会对每个请求签名，改写后签名会失效。\n- ZCode 暂不支持账号登录的 Coding Plan，请改用 API key 的 provider。\n- Codex 仍然需要使用自定义 provider（`wire_api = \"responses\"`）。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上版本的，可以在应用内点「检查更新」升级到 `v0.5.0`，安装时仍需你确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.5.0_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.5.0_x64-setup.exe`\n\n安装包没有使用 Apple Developer ID、公证或 Windows Authenticode。更新包用独立的生产 minisign 密钥签名，这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43141334,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.5.0_aarch64.dmg",
+        "size": 44682609,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/Keysmith.Switch_0.5.0_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.5.0_x64-setup.exe",
+        "size": 42479816,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/Keysmith.Switch_0.5.0_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.5.0_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/Keysmith.Switch_0.5.0_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1808,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.5.0/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.4.0",
+    "name": "Keysmith Switch v0.4.0",
+    "date": "2026-10-06T13:28:15Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.4.0",
+    "body": "# Keysmith Switch v0.4.0\n\n新模块：**输入替换**。你在 Codex 里照常打字，发给模型前按你的规则替换字面文字；输入框和会话历史里仍然是你打的原文。\n\n## 这一版有什么\n\n- **输入替换页**：在左侧栏打开。\n  - 总开关和「对 Codex 生效」开关。关闭后不会替换任何内容，你的规则会保留。\n  - 「我的规则」默认是空的，由你自己填写。规则按字面匹配、区分大小写；同一位置取最长的那条；替换后的文字不会再被替换；以 `/` 开头的消息整条跳过。\n  - 只替换你自己输入的文字（包括历史里你之前说过的话）。助手回复、工具输出和 Codex 自带的上下文都不会改动。\n- **连接 Codex**：点「连接 Codex」后，Switch 会在本机启动一个只监听 `127.0.0.1` 的中转服务，并在 Codex 的 `config.toml` 里新增一个 provider 指向它。你原来的 provider 配置不会被修改，写入前会自动备份。中转服务会开机自启，Switch 没打开时也能工作。\n  - 「断开」会让 Codex 改回直接连接，并停止中转服务；你的规则会保留。\n  - 部署或撤销 Codex 提示词都不会影响这个连接。\n  - 如果其他工具（例如 cc-switch）把 Codex 切到了别的 provider，输入替换页会提示「没有经过中转」，你可以重新连接。\n- **规则包**：拓展仓库现在也可以发布输入替换规则包。安装前会先列出全部规则，你可以选择「安装并启用」或「只安装」。已经启用的规则包有新版本时不会自动生效，要你在输入替换页看过差异、确认后才切换。目前官方没有上架任何规则包。\n\n## 目前的限制\n\n- 只支持 Codex。Claude Code、Grok Build 和 ZCode 以后再接入。\n- Codex 必须使用自定义 provider（`config.toml` 里的 `[model_providers.xxx]`，`wire_api = \"responses\"`）。用 Codex 内置的 OpenAI 登录时暂时不能连接，页面上会说明原因。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.4.0`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.4.0_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.4.0_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 43035086,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.4.0_aarch64.dmg",
+        "size": 44586816,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/Keysmith.Switch_0.4.0_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.4.0_x64-setup.exe",
+        "size": 42394803,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/Keysmith.Switch_0.4.0_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.4.0_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/Keysmith.Switch_0.4.0_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1861,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.4.0/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.9",
+    "name": "Keysmith Switch v0.3.9",
+    "date": "2026-10-06T09:48:02Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.9",
+    "body": "# Keysmith Switch v0.3.9\n\n补上 v0.3.8 提示里漏掉的一句话：清理会删除聊天记录。\n\n## 这一版有什么\n\n- **清理前说清楚会删什么**：v0.3.8 在 Codex 部署被拦截时，会引导你点左下角的「清理」，但提示只说会清掉过期的部署记录、保留 `config.toml`，没有提到清理同时会**永久删除这个 Agent 的会话历史和登录**。这些内容不会进回收站，也不在「设置 → 版本」里，删除后无法恢复。现在提示会写明这一点，并建议想保留聊天记录的话，先备份整个 `.codex` 文件夹，再决定要不要清理。\n- 「清理」本身的行为没有变化。\n\n## 如果你在 v0.3.8 里已经点过清理\n\n被删除的会话历史只能从你自己的备份（例如 macOS 的 Time Machine）里找回。恢复前请先退出 Codex，避免新的会话写入。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.9`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.9_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.9_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41376032,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.9_aarch64.dmg",
+        "size": 42981383,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/Keysmith.Switch_0.3.9_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.9_x64-setup.exe",
+        "size": 41126744,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/Keysmith.Switch_0.3.9_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.9_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/Keysmith.Switch_0.3.9_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1794,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.9/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.8",
+    "name": "Keysmith Switch v0.3.8",
+    "date": "2026-10-06T08:39:51Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.8",
+    "body": "# Keysmith Switch v0.3.8\n\n部署被拦截时，现在会用你的语言说清楚原因和下一步。\n\n## 这一版有什么\n\n- **拦截提示不再是英文原文**：之前如果 Codex 的 `config.toml` 被手动改过或被其他工具改过，部署会被拦住，但提示是一整段英文，也没说该怎么办。现在提示按界面语言（简体中文、繁體中文、English）显示，并说明你的 `config.toml` 没有被改动。\n- **告诉你下一步点哪里**：遇到这种情况，提示会引导你点左下角的「清理」清掉过期的部署记录，你的 `config.toml` 会原样保留，之后可以重新部署。\n\n## 已知情况\n\n- 这一版只翻译了上面这一类拦截提示，其他少数拦截原因仍可能显示英文原文，后续版本会继续补齐。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.8`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.8_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.8_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41374160,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.8_aarch64.dmg",
+        "size": 43012714,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/Keysmith.Switch_0.3.8_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.8_x64-setup.exe",
+        "size": 41126003,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/Keysmith.Switch_0.3.8_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.8_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/Keysmith.Switch_0.3.8_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1776,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.8/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.7",
+    "name": "Keysmith Switch v0.3.7",
+    "date": "2026-10-06T04:35:33Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.7",
+    "body": "# Keysmith Switch v0.3.7\n\n修复 Windows 上反复弹出命令行窗口，以及使用系统代理时无法检查更新的问题。\n\n## 这一版有什么\n\n- **Windows 上不再弹出命令行窗口**：之前只有读取状态时做了处理，检查更新、检测和安装官方 CLI、取消任务、清理前的进程检查、反馈入口都会弹黑窗。现在这些都不再弹窗。\n- **使用系统代理时可以检查更新**：之前检查更新强制不走任何代理，Windows 上用 Clash、v2rayN 等设置系统代理的用户，会看到「offline: curl: (28) Operation timed out」。现在会读取 Windows 系统代理；设置了 `https_proxy` 或 `all_proxy` 环境变量时优先使用环境变量。本机地址始终不走代理。\n- **检查更新的等待时间从 20 秒延长到 30 秒**：网络较慢时不容易误报超时。\n\n## 已知情况\n\n- 这一版的 Windows 修复没有在真实 Windows 机器上完整验证过。如果仍然遇到弹窗或更新失败，请通过应用内的反馈入口告诉我们。\n- 应用内下载安装更新这一步由 Tauri 更新插件完成，这一版没有改动它。如果下载阶段仍然失败，请从发布页手动下载安装包。\n- 不使用代理也无法直接访问 GitHub 的网络环境，这一版仍然无法在应用内更新，请从发布页手动下载。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.7`；安装仍需用户确认。**如果你正受上面的更新超时影响，应用内更新可能无法成功，请直接从发布页下载安装包安装一次，之后的更新就会正常。**\n- macOS Apple Silicon：`Keysmith.Switch_0.3.7_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.7_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41370690,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.7_aarch64.dmg",
+        "size": 43016438,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/Keysmith.Switch_0.3.7_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.7_x64-setup.exe",
+        "size": 41124480,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/Keysmith.Switch_0.3.7_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.7_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/Keysmith.Switch_0.3.7_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1755,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.7/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.6",
+    "name": "Keysmith Switch v0.3.6",
+    "date": "2026-10-05T13:30:08Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.6",
+    "body": "# Keysmith Switch v0.3.6\n\n拓展页的卡片更简洁了。\n\n## 这一版有什么\n\n- **卡片不再显示包摘要**：拓展页的每张卡片只保留名称、官方角标、条数、大小、版本和安装状态。已上架的、已安装的和以后新发布的包都一样，不再显示那一行说明。提示词正文和包的内容没有任何变化。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.6`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.6_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.6_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41371714,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.6_aarch64.dmg",
+        "size": 42977147,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/Keysmith.Switch_0.3.6_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.6_x64-setup.exe",
+        "size": 41126227,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/Keysmith.Switch_0.3.6_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.6_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/Keysmith.Switch_0.3.6_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1818,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.6/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.5",
+    "name": "Keysmith Switch v0.3.5",
+    "date": "2026-10-05T12:15:25Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.5",
+    "body": "# Keysmith Switch v0.3.5\n\nWindows 版现在可以使用 ZCode 了。\n\n## 这一版有什么\n\n- **Windows 上的 ZCode 不再显示「不可用」**：之前 Windows 版把 ZCode 整个禁用，页面只显示「ZCode Keysmith is not available on Windows」。现在 Windows 上可以像 macOS 一样部署、查看状态和移除 ZCode 的提示词。Switch 不会替你安装 ZCode 本体，请先从 ZCode 官方渠道安装。\n- **部署后能认出当前生效的提示词**：Windows 上写入的文件使用 Windows 换行，之前这会让应用认不出刚部署的是哪条提示词。现在按文本内容识别，部署后会正确显示「部署中」。\n- **读取状态时不再闪黑窗**：Windows 上每次读取状态都会短暂弹出一个控制台窗口，现在不会了。\n\n## 已知情况\n\n- 这一版的 Windows ZCode 支持首次发布，我们没有在真实 Windows 机器上完整走过一遍部署。如果遇到问题，请通过应用内的反馈入口告诉我们。\n- 在 Windows 上部署 ZCode 会清除你的用户级环境变量 `NODE_OPTIONS`，移除提示词时不会恢复它。如果你自己设置过，部署后请重新设置。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.5`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.5_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.5_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41371376,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.5_aarch64.dmg",
+        "size": 43010793,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/Keysmith.Switch_0.3.5_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.5_x64-setup.exe",
+        "size": 41122180,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/Keysmith.Switch_0.3.5_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.5_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/Keysmith.Switch_0.3.5_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1754,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.5/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.4",
+    "name": "Keysmith Switch v0.3.4",
+    "date": "2026-10-05T06:08:37Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.4",
+    "body": "# Keysmith Switch v0.3.4\n\n拓展包有更新时更容易发现，也更容易一次装好。\n\n## 这一版有什么\n\n- **侧栏显示可更新的数量**：之前拓展包有更新时，左侧栏的拓展按钮只有一个小红点，看不出有几个包要更新。现在会显示数字（超过 9 个显示 9+），全部是最新时不显示。公告按钮的未读提示也改成了数字。\n- **一键全部更新**：有两个及以上的包可更新时，拓展包页面顶部会出现「全部更新」，逐个装好后汇总结果；中途有包失败，会告诉你已经更新了几个、失败的原因是什么。\n- **更新前后的版本一目了然**：可更新的包会显示 `v旧版本 → v新版本`，并排在列表最前面。\n- **手动检查有结果提示**：点「检查更新」后，会提示「全部已是最新」或「发现 N 个可更新」。上次检查的时间改成「刚刚」「3 分钟前」这样的说法，鼠标停在上面可以看到具体时间。\n- **「停用拓展包」前先确认**：之前页面顶部的「关闭」看起来像关闭页面，点了却会直接关掉拓展包功能。现在改名为「停用拓展包」，点了会先说明已装入的提示词会保留，再让你确认。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.4`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.4_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.4_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41368327,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.4_aarch64.dmg",
+        "size": 42966846,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/Keysmith.Switch_0.3.4_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.4_x64-setup.exe",
+        "size": 41119063,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/Keysmith.Switch_0.3.4_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.4_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/Keysmith.Switch_0.3.4_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1878,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.4/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.3",
+    "name": "Keysmith Switch v0.3.3",
+    "date": "2026-10-04T02:01:37Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.3",
+    "body": "# Keysmith Switch v0.3.3\n\n修复 Codex 清理后无法再部署的问题，并让扩展包里的提示词不再公开明文。\n\n## 这一版有什么\n\n- **Codex 清理后可以重新部署了**：之前清理会把 `~/.codex/config.toml` 搬走，而 Codex 的部署需要这个文件，之后每次部署都失败，界面上只显示 `ok=false`、`exit 1`。现在缺少这个文件时部署会自动补一个，失败时也会显示真正的原因。\n- **清理不再带走 Codex 的 `config.toml`**：这个文件里有你的模型、服务商、插件和已信任的项目，之前清理一次就全丢了。现在清理会保留它；登录信息仍然会被清掉。\n- **“当前未部署”与“部署中”不再互相矛盾**：Codex 的提示词文件被手动改过后，页面顶部会正常显示正在使用的提示词，并提示配置被手动改过，可以重新部署，或用“清理”从头开始。\n- **扩展包里的提示词不公开明文**：从扩展包装进来的提示词，列表里只显示标题和标签，卡片点不开，也不能编辑、复制或对比版本，部署照常使用。你自己导入、自己写的提示词不受影响，可以照常查看和编辑。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.3`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.3_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.3_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41368730,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.3_aarch64.dmg",
+        "size": 42976087,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/Keysmith.Switch_0.3.3_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.3_x64-setup.exe",
+        "size": 41118196,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/Keysmith.Switch_0.3.3_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.3_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/Keysmith.Switch_0.3.3_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1838,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.3/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.2",
+    "name": "Keysmith Switch v0.3.2",
+    "date": "2026-10-02T12:39:25Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.2",
+    "body": "# Keysmith Switch v0.3.2\n\n修复一个状态显示矛盾的问题。\n\n## 这一版有什么\n\n- **部署状态不再自相矛盾**：如果 Agent 的配置在部署后被手动改过，之前页面顶部会显示“当前未部署 / 还没有部署提示词”，下面的列表却把同一条提示词标成“部署中”。现在顶部会正常显示正在使用的提示词，并提示“配置在部署后被手动改过”，你可以重新部署，或用“清理”从头开始。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.2`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.2_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.2_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41362842,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.2_aarch64.dmg",
+        "size": 42971737,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/Keysmith.Switch_0.3.2_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.2_x64-setup.exe",
+        "size": 41114123,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/Keysmith.Switch_0.3.2_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.2_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/Keysmith.Switch_0.3.2_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1849,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.2/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.1",
+    "name": "Keysmith Switch v0.3.1",
+    "date": "2026-10-02T10:25:46Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.1",
+    "body": "# Keysmith Switch v0.3.1\n\n新增“公告”：Keysmith 可以随时给你发公告，不用等发新版本。\n\n## 这一版有什么\n\n- **公告**：左侧栏“设置”上方多了一个铃铛，有新公告时会出现小红点。点开可以看到全部公告，比如这一版有什么、下一版预告，以及各个 Agent 推荐的登录方式和支持的模型版本。\n- **置顶公告**：重要的公告会显示在 Agent 页面顶部，点右上角可以关掉，关掉后不再出现。有些公告只在对应的 Agent 页面显示。\n- **三种语言**：公告支持简体中文、English 和繁體中文，跟随 App 的语言设置。\n- **安全**：公告只从 Keysmith 的官方仓库读取，只显示纯文本；链接只会在浏览器里打开官方网站。读取失败时不影响使用。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.1`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.1_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.1_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41359962,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.1_aarch64.dmg",
+        "size": 43036476,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/Keysmith.Switch_0.3.1_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.1_x64-setup.exe",
+        "size": 41111421,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/Keysmith.Switch_0.3.1_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.1_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/Keysmith.Switch_0.3.1_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1835,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.1/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.0",
+    "name": "Keysmith Switch v0.3.0",
+    "date": "2026-10-02T07:40:53Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.3.0",
+    "body": "# Keysmith Switch v0.3.0\n\n“清理”现在会把选中的 Agent 清回刚安装时的样子，四个 Agent 都支持。\n\n## 这一版有什么\n\n- **完整清理**：Claude Code、Codex、Grok 和 ZCode 的页面都有“清理”。它会移除 Keysmith 部署的内容，也会移除你自己加的规则、自定义 agents、命令、hooks、skills 和配置，让 Agent 打开后和第一次装好时一样。\n- **登录和历史也会清掉**：登录文件、Claude Code 在系统钥匙串里的登录、会话历史、插件和缓存会直接删除，**不会保存**，清理后需要重新登录。\n- **配置存一份不含登录的版本**：`settings.json`、`config.toml` 等配置会先存进版本里，存之前去掉所有 key、token 和账号信息；如果去掉后仍检测到登录信息，清理会停下，什么都不改。\n- **回滚**：“设置 → 版本”里可以把规则、skills、配置等放回去。登录和会话历史不会回来；如果你已经重新登录，现有的配置文件不会被覆盖。回滚对话框会列出要恢复的内容。\n- **部署预览无法确认时**：预览里会出现“清理”按钮，直接打开清理弹窗。配置被手动改过（drift）时也能清理。\n- **不会动的东西**：你项目目录里的文件（包括 git 项目，以及 ZCode 的 `~/.zcode/workspace`）、你的提示词库、Agent 软件本身。ZCode 应用仍被 Keysmith 改动且无法还原时，清理会停下，先要求修复。\n- **清理前要先退出 Agent**：Agent 正在运行时不能清理。Claude 桌面版不算 Claude Code。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.3.0`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.3.0_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.3.0_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41310272,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.0_aarch64.dmg",
+        "size": 42922172,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/Keysmith.Switch_0.3.0_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.0_x64-setup.exe",
+        "size": 41075045,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/Keysmith.Switch_0.3.0_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.3.0_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/Keysmith.Switch_0.3.0_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1907,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.3.0/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.9",
+    "name": "Keysmith Switch v0.2.9",
+    "date": "2026-10-01T12:51:05Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.9",
+    "body": "# Keysmith Switch v0.2.9\n\n修复“检查更新”时界面闪烁、像卡住的问题，并让 Codex 的“清理”能清空 `AGENTS.md` 和记忆文件夹。\n\n## 这一版有什么\n\n- **检查更新不再闪烁**：之前点一次“检查更新”，图标会换成转圈再换回来，文字也会淡出淡入两次，转圈每转一圈还会停顿一下。现在图标保持不变，只在外面转一圈匀速的光环，结果没变时文字原地更新。\n- **Codex 也能清理 `AGENTS.md`**：之前 Codex 的“清理”只会停用 Keysmith 部署的内容，`AGENTS.md` 不会动，Codex 没部署时连“清理”按钮都看不到。现在 Codex 页面始终有“清理”，会清空 `~/.codex/AGENTS.md`（包括你自己写的内容），和 Claude Code 的 `CLAUDE.md` 一样先要求勾选确认。\n- **记忆文件夹可以选择清理**：弹窗里有单独的勾选框，**默认不勾选**；勾选后会把整个 `~/.codex/memories` 文件夹移进保存的版本里，不复制也不删除，并留下一个空文件夹。Codex 正在运行时不能清理，需要先退出。\n- **回滚**：“设置 → 版本”里的回滚现在也会恢复 `AGENTS.md` 和记忆文件夹；现有的内容会先另存为一个新版本，保存的版本本身保持完整，可以再次回滚。\n- **不会动的东西**：Codex 的数据库、会话等其他文件，项目目录里的文件，以及你的提示词库。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.2.9`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.9_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.9_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41272718,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.9_aarch64.dmg",
+        "size": 42894404,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/Keysmith.Switch_0.2.9_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.9_x64-setup.exe",
+        "size": 41018203,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/Keysmith.Switch_0.2.9_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.9_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/Keysmith.Switch_0.2.9_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1804,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.9/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.8",
+    "name": "Keysmith Switch v0.2.8",
+    "date": "2026-10-01T11:15:20Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.8",
+    "body": "# Keysmith Switch v0.2.8\n\n修复点击部署按钮时卡片闪烁的问题，并新增“清理”和“回滚”。\n\n## 这一版有什么\n\n- **卡片不再闪烁**：之前把指针停在卡片的“部署”按钮上时，卡片会来回抖动。现在按钮和卡片的悬停效果已经分开，点击确认部署的过程中也保持稳定。\n- **清理**：每个 Agent 页面新增“清理”按钮。它会停用正在部署的提示词；Claude Code 还会清空 `~/.claude/CLAUDE.md`，包括你自己写在里面的内容（需要先勾选确认）。只清理 Keysmith 部署的内容和这个记忆文件，不会动你的项目文件。\n- **清理前先存一个版本**：清理前会把当时部署的提示词和 `CLAUDE.md` 的原样内容保存起来，放在 `~/.keysmith-switch/snapshots/`。\n- **回滚**：设置里新增“版本”页，列出保存的版本，可以回滚或删除。回滚会重新部署当时的提示词并把 `CLAUDE.md` 恢复原样；如果会覆盖现在的内容，会先把现在的状态另存一个版本，所以回滚本身也能撤销。\n- **都是先预览再确认**：清理和回滚都和部署一样，先给你看会发生什么，确认后才执行。\n- **目前的范围**：只有 Claude Code 有已知的记忆文件；Codex、Grok Build、ZCode 的清理只会停用部署。保存的版本不在导出的备份里，“清除全部数据”也不会删除它们，需要在“版本”页单独删除。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.2.8`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.8_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.8_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41260500,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.8_aarch64.dmg",
+        "size": 42874032,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/Keysmith.Switch_0.2.8_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.8_x64-setup.exe",
+        "size": 41004221,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/Keysmith.Switch_0.2.8_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.8_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/Keysmith.Switch_0.2.8_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1819,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.8/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.7",
+    "name": "Keysmith Switch v0.2.7",
+    "date": "2026-10-01T05:36:51Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.7",
+    "body": "# Keysmith Switch v0.2.7\n\n修复 ZCode 无法部署和 Grok 配置被改动后无法部署的问题，部署失败时会说清真正的原因。\n\n## 这一版有什么\n\n- **ZCode 现在可以部署了**：之前在 macOS 上，ZCode 安装时会读取自己的脚本文件，而打包进 App 的程序里没有这个文件，安装会直接失败。现在已经一起打包，构建时也会检查，缺了就不通过。\n- **Grok 配置被改动后可以修复**：如果 Grok 配置文件里 Keysmith 管理的几行被挪动或改写过，部署会被拒绝。现在部署对话框会用中文说明原因，并提供“整理配置”：先预览，你确认后会先备份配置文件，再把这几行放回原位，你自己的设置原样保留。整理完成后会自动重新生成刚才被拦下的部署。\n- **部署失败时说清原因**：一份部署计划只能确认一次。之前失败后还能再点一次，然后出现“没有确认过的计划”这种看不懂的提示，把真正的原因盖住了。现在失败后会显示真实原因（技术输出折叠在“详细信息”里），原来的确认按钮置灰，改为“重新生成计划”。\n- 部署被拦下时，不再列出 `ok=false`、`exit 1` 这类没有意义的原因，重复的警告也合并了。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.2.7`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.7_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.7_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41186219,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.7_aarch64.dmg",
+        "size": 42833840,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/Keysmith.Switch_0.2.7_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.7_x64-setup.exe",
+        "size": 40943035,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/Keysmith.Switch_0.2.7_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.7_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/Keysmith.Switch_0.2.7_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1830,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.7/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.6",
+    "name": "Keysmith Switch v0.2.6",
+    "date": "2026-10-01T03:55:02Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.6",
+    "body": "# Keysmith Switch v0.2.6\n\n新增“拓展包”：官方发布的提示词包，可以单独更新，不用更新 App。\n\n## 这一版有什么\n\n- **拓展包页面**：左侧栏新增“拓展”按钮。页面里列出官方拓展包，可以安装、更新和卸载，官方发布的包带“官方”标记。\n- **默认关闭，打开才联网**：在“拓展”页点“打开拓展包”之前，App 不会读取网络。打开后只读取官方拓展源的清单和你选择安装的包，不会上传你的任何内容。\n- **只进提示词库，不自动部署**：安装只会把提示词放进提示词库，部署到 Agent 仍然要你在确认单里点确认。\n- **不会覆盖你的修改**：更新时，你没改过的提示词会直接更新（保留历史版本）；你改过的保持原样，新的内容另存一份；你删掉的不会回来。卸载只会移除你没改过、也没在使用的提示词。\n- **有更新会提醒**：拓展包有新版本时，“拓展”按钮上会出现红点。打开拓展包后，App 会每 6 小时在后台看一次，窗口回到前台超过 1 小时也会看。\n- **检查规则**：拓展包只含数据，没有可执行代码。每个包下载后，App 会核对清单里的大小和哈希，并逐项检查内容；下载地址必须在官方仓库之下。拓展源目前没有签名，这一点写在 README 里。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.2.6`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.6_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.6_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41137390,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.6_aarch64.dmg",
+        "size": 42774484,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/Keysmith.Switch_0.2.6_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.6_x64-setup.exe",
+        "size": 40895670,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/Keysmith.Switch_0.2.6_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.6_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/Keysmith.Switch_0.2.6_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1866,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.6/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.5",
+    "name": "Keysmith Switch v0.2.5",
+    "date": "2026-09-30T14:15:30Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.5",
+    "body": "# Keysmith Switch v0.2.5\n\n有新版本时，应用会主动提醒你；检查更新的过程更顺滑；左上角换了更精致的图标。\n\n## 这一版有什么\n\n- **新版本提醒**：有新版本发布时，左侧栏的设置图标和“关于”标签页上会出现红点。检查过程中红点不会闪灭。\n- **自动发现新版本**：应用开着不关也能发现新版本。之前只在启动时检查一次；现在每 6 小时在后台再查一次，窗口重新回到前台且距上次检查超过 1 小时也会查。后台检查不会打扰你：不显示“正在检查”，失败也不报错。在设置里关闭“自动检查更新”后，这些都不会发生。\n- **检查更新更流畅**：“关于”页的更新区域重新设计。一个图标随状态变化（检查时光环旋转、已是最新时对勾一笔画出、有新版本时光晕外扩），文字平滑出现，需要操作的按钮和说明是展开出来的。整块卡片不再上下跳动，新一轮检查期间会保留上一次的结果，不会先消失再出现。系统开启“减少动态效果”时会自动简化动画。\n- **左上角图标**：直接使用应用本身的高清图标，去掉了外面多余的一层方框，移上去会轻轻抬起并倾斜；点击它会打开“关于”页。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上的版本可以在应用内点「检查更新」升级到 `v0.2.5`；安装仍需用户确认。\n- 红点提醒从这一版开始才有：从 `v0.2.4` 及更早版本升级后，之后的新版本才会自动提醒你。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.5_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.5_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41034428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.5_aarch64.dmg",
+        "size": 42615790,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/Keysmith.Switch_0.2.5_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.5_x64-setup.exe",
+        "size": 40803508,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/Keysmith.Switch_0.2.5_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.5_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/Keysmith.Switch_0.2.5_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1914,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.5/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.4",
+    "name": "Keysmith Switch v0.2.4",
+    "date": "2026-09-30T12:20:05Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.4",
+    "body": "# Keysmith Switch v0.2.4\n\n修复确认部署被拒绝的问题，并带来全新的界面：左侧 Agent 栏、更好懂的部署确认、⌘K 命令面板，以及可以编辑机器上正在用的提示词。\n\n## 这一版有什么\n\n**修复**\n\n- 修复应用要求的适配器版本落后于随包适配器（Claude Code 7.2、Codex 0.6.0、Grok 0.6.1、ZCode 0.3.2），导致确认部署时被判定为“版本不匹配”而拒绝的问题。\n- 修复 Claude Code 刚部署完提示词，状态却显示“未部署”的问题：读取状态时不再要求终端包装脚本。\n- 从提示词库删除的提示词，不再被当作“正在使用的库提示词”显示。\n\n**新的界面**\n\n- 顶部导航换成左侧竖向的 Agent 栏，选中的 Agent 有一圈跟随主题色的光晕，去掉了原来的下划线。\n- 首页顶部大字显示“正在使用”的提示词；“移除当前部署”改称“停用”。\n- 部署确认改成一句话加“现在 → 部署后”的图示，说明会替换什么、原来的内容会先自动备份；文件、备份、指纹等细节收进“详细信息”，默认折叠，出问题时用文字说明。\n- 新增 ⌘K（Windows 为 Ctrl+K）命令面板：切换 Agent、新建并部署、直接部署库里的提示词。按钮、卡片和首页顶部也有了更明显的交互反馈；系统开启“减少动态效果”时会自动关闭这些动画。\n\n**编辑机器上正在用的提示词**\n\n- 首页和“现在正在用的提示词”卡片上新增“编辑”和“收入库并编辑”。会把机器上的提示词读回提示词库再打开编辑器，读不出来时改为打开粘贴框。\n- 只有读到的内容与适配器报告的指纹一致才会收入库，不会猜；Codex 因为适配器不提供指纹，读取它配置里指向的提示词文件，且该文件必须在 Codex 目录内。\n- 保存编辑不会改动机器上的内容，需要重新部署才会生效，保存时会有提示。\n\n**命名**\n\n- 界面文案和文档统一称 “Claude Code”，指开源的 Claude Code 命令行工具，不是 Claude 桌面版的聊天。\n\n## 安装\n\n- 已安装的版本可以在应用内点「检查更新」升级到 `v0.2.4`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.4_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.4_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40956249,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.4_aarch64.dmg",
+        "size": 42538669,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/Keysmith.Switch_0.2.4_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.4_x64-setup.exe",
+        "size": 40733725,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/Keysmith.Switch_0.2.4_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.4_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/Keysmith.Switch_0.2.4_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2031,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.4/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.3",
+    "name": "Keysmith Switch v0.2.3",
+    "date": "2026-09-30T04:27:00Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.3",
+    "body": "# Keysmith Switch v0.2.3\n\n部署状态不再和提示词列表对不上；授权改为 PolyForm Noncommercial 1.0.0。\n\n## 这一版有什么\n\n- 机器上已经部署了提示词、但提示词库里没有对应条目时，“当前部署”分组会出现一张标着“部署中”的卡片，不再显示“还没有提示词”。库里能匹配到的提示词同样标为“部署中”。\n- ZCode 的图标换回官方应用图标。\n- 授权由 MIT 改为 [PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/)：源码公开，个人使用、学习和研究可以自由使用，商业使用需另行取得授权。`v0.2.2` 及更早版本已按 MIT 发布，不受影响。改编自 CC Switch 的三个文件仍保留其 MIT 声明，见 `THIRD_PARTY_NOTICES.md`。\n\n## 安装\n\n- 已安装的版本可以在应用内点「检查更新」升级到 `v0.2.3`；安装仍需用户确认。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.3_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.3_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40940881,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.3_aarch64.dmg",
+        "size": 42519576,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/Keysmith.Switch_0.2.3_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.3_x64-setup.exe",
+        "size": 40713419,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/Keysmith.Switch_0.2.3_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.3_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/Keysmith.Switch_0.2.3_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1949,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.3/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.2",
+    "name": "Keysmith Switch v0.2.2",
+    "date": "2026-09-30T01:15:14Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.2",
+    "body": "# Keysmith Switch v0.2.2\n\n当前生效的提示词现在看得见了；界面更干净，点击也都有反馈。\n\n## 这一版有什么\n\n- 顶部会显示当前部署的是哪条提示词；如果本机已部署但应用里没有记录，会按内容在提示词库中匹配，仍无法识别时标注“来源未记录”。对应的卡片会出现在“当前部署”分组。\n- 所有部署都是全局安装，界面不再显示“用户范围”，也不再提供范围选择。\n- 移除了键盘快捷键，设置页不再有快捷键列表。\n- 「检查更新」「移除当前部署」「部署」点击后都会显示进度；检查更新至少显示一小段时间，结果不再一闪而过。移除部署成功后有简短的完成动画。\n- 「设置已保存」改为标题旁的小提示，不再弹出遮住控件的大卡片；其它提示改为底部居中的紧凑样式，重复消息不再叠加。\n- 修复语言下拉菜单被卡片裁掉、看不全的问题。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上：可以在应用内检查更新到 `v0.2.2`；安装仍需用户确认。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.2_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.2_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40912706,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.2_aarch64.dmg",
+        "size": 42493088,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/Keysmith.Switch_0.2.2_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.2_x64-setup.exe",
+        "size": 40694816,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/Keysmith.Switch_0.2.2_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.2_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/Keysmith.Switch_0.2.2_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2211,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.2/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.1",
+    "name": "Keysmith Switch v0.2.1",
+    "date": "2026-09-29T16:48:08Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.1",
+    "body": "# Keysmith Switch v0.2.1\n\n「问题上报」和「提需求」现在对所有用户都能用了；设置按钮换成了真正的齿轮图标。\n\n## 这一版有什么\n\n- 反馈默认在浏览器中打开仓库的 GitHub 表单，版本、系统、描述和联系方式都已预填。用你自己的 GitHub 账号检查后提交即可，截图可以直接拖进网页。\n- 本机已安装并登录 GitHub CLI 时，仍会直接创建 issue。不再要求账号对仓库有推送权限：任何 GitHub 账号都能在公开仓库提交 issue。\n- 描述很长时，表单只预填前面一部分并提示在网页补全，不会打不开。\n- 修复中文描述超过约 3,300 字时被错误拒绝的问题：长度限制改为按字符计算。\n- 设置按钮的图标由放射线（看起来像太阳）换成八齿齿轮。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上：可以在应用内检查更新到 `v0.2.1`；安装仍需用户确认。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.1_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.1_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。\n",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40919342,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.1_aarch64.dmg",
+        "size": 42499131,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/Keysmith.Switch_0.2.1_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.1_x64-setup.exe",
+        "size": 40690783,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/Keysmith.Switch_0.2.1_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.1_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/Keysmith.Switch_0.2.1_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2120,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.1/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.0",
+    "name": "Keysmith Switch v0.2.0",
+    "date": "2026-09-29T14:39:32Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.2.0",
+    "body": "# Keysmith Switch v0.2.0\n\n界面整体重做：每个 Agent 有自己的工作区，首页就是提示词库，快速部署变成一个随时呼出的编辑面板。部署前仍然先审阅计划再确认，写入仍由现有 adapter 完成。\n\n## 这一版有什么\n\n- 首页即工作区。顶部横幅显示当前 Agent 是否已部署、部署在哪个范围、部署的是哪条提示词，移除与刷新也在这里。下方是提示词库：当前部署的条目置顶，其余卡片可一键部署，同样先生成部署计划、确认后才写入。\n- 快速部署改为弹出面板（⌘N / Ctrl+N）。可粘贴，也可导入或直接拖入 `.md` 文件；实时显示字数和行数；可以只保存到提示词库，或按 ⌘↵ / Ctrl+↵ 生成部署预览。关闭面板草稿仍在。\n- 每个 Agent 有自己的主题色：Claude 橙、Codex 墨绿、Grok 银灰、ZCode 紫。切换时颜色平滑过渡。\n- 部署预览重新排版：文件改动带动作标签，备份单独列出，内容指纹显示「当前 → 目标」，警告与重载提示分开呈现。检测到漂移时可在预览里直接从备份恢复。\n- 部署成功后有一个短暂的确认动效；开启「减少动态效果」时改为静态提示。\n- 快捷键：⌘1–4 / Ctrl+1–4 切换 Agent，⌘, / Ctrl+, 打开设置，/ 或 ⌘F / Ctrl+F 搜索，⌘R / Ctrl+R 刷新状态。完整列表在「设置 › 通用」。\n- macOS 隐藏原生标题栏，红绿灯并入应用顶栏，拖动顶栏即可移动窗口。Windows 保留原生标题栏。\n- 修复深色模式下编辑器行号栏与当前行仍为浅色的问题。\n- v0.1.9 的快速部署行为不变：默认离线、相同正文复用既有条目、确认时重新校验内容哈希与 adapter 状态。四个 Agent 继续使用随包提供的 legacy adapter。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上：可以在应用内检查更新到 `v0.2.0`；安装仍需用户确认。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.2.0_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.2.0_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40913194,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.0_aarch64.dmg",
+        "size": 42501736,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/Keysmith.Switch_0.2.0_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.0_x64-setup.exe",
+        "size": 40677932,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/Keysmith.Switch_0.2.0_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.2.0_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/Keysmith.Switch_0.2.0_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2199,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.2.0/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.9",
+    "name": "Keysmith Switch v0.1.9",
+    "date": "2026-09-28T01:12:24Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.1.9",
+    "body": "# Keysmith Switch v0.1.9\n\nQuick Deploy 不再绑定四套 Keysmith 官方提示词正文。粘贴自己的提示词，选择 Agent 与范围，审阅部署计划并确认后，再由现有 adapter 写入目标配置。\n\n## 这一版有什么\n\n- 快速部署支持粘贴提示词正文与自定义标题，选择支持的 scope；需要项目范围时指定项目目录。先保存到本地提示词库，再展示目标路径、写入动作、备份、警告与阻塞项，由用户确认执行。\n- 默认粘贴路径离线工作，不再从四个兄弟仓库的远程分支抓取提示词。仍保留用户明确选择本地 Markdown 文件的导入路径。\n- 同一 Agent 下相同正文复用既有条目，不会悄悄覆盖该条目的标题或标签；部署失败后条目仍在，可以重新预览和重试。\n- 交给 adapter 的临时输入只包含提示词正文，不包含库条目的 Markdown 元数据；预览或执行完成后清理。确认时重新校验内容哈希、提示词版本及 adapter 状态，过期预览须重新生成。\n- 保留 v0.1.8 的每次运行状态缓存、显式刷新与关闭窗口即退出行为。四个现有 Agent 继续使用随包提供的 legacy adapter；Agent registry 与外部 adapter 尚未加入本版。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上：可以在应用内检查更新到 `v0.1.9`；安装仍需用户确认。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.1.9_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.1.9_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名；这不是平台代码签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40906859,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.9_aarch64.dmg",
+        "size": 42488958,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/Keysmith.Switch_0.1.9_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.9_x64-setup.exe",
+        "size": 40676643,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/Keysmith.Switch_0.1.9_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.9_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/Keysmith.Switch_0.1.9_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2036,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.9/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.8",
+    "name": "Keysmith Switch v0.1.8",
+    "date": "2026-09-24T03:46:17Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.1.8",
+    "body": "# Keysmith Switch v0.1.8\n\n本机部署状态在一次运行里只读一次。关闭窗口就是退出。界面语言改成页内下拉。顶栏、首屏和设置换成同一套界面。\n\n## 这一版有什么\n\n- 四个工具各自记住已部署或未部署。切回来不再显示「正在读取本机状态」。同一次读取不会重复发起。部署成功或卸载成功直接改掉记住的状态，不用刷新。卡片上的刷新是唯一会重新读取本机的入口。重新打开应用会再读一次。读取失败停在原来那颗按钮旁边，不会反复重读。\n- 读取进行时，按钮位置是一枚不确定进度环。开启「减少动态效果」后旋转停止，圆环仍在，能看出正在读取。\n- 关闭窗口即退出。没有托盘图标，没有后台进程，没有开机启动，也没有静默启动。只有未保存草稿、并且选择不放弃时，窗口才留下。\n- 界面语言是页内下拉：简体中文、繁體中文、English。不再使用会盖住主题选项的系统浮层。\n- 顶栏、首屏卡片、设置的通用 / 工具 / 关于共用同一套界面：暖色底、单一铜色强调、一个圆角台阶。\n\n## 安装\n\n- 已安装 `v0.1.3` 及以上：可以在应用内更新到 `v0.1.8`。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.1.8_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.1.8_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名。\n",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41099208,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.8_aarch64.dmg",
+        "size": 42701025,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/Keysmith.Switch_0.1.8_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.8_x64-setup.exe",
+        "size": 40791931,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/Keysmith.Switch_0.1.8_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.8_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/Keysmith.Switch_0.1.8_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1844,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.8/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.7",
+    "name": "Keysmith Switch v0.1.7",
+    "date": "2026-09-24T01:40:10Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.1.7",
+    "body": "首屏只留一个按钮。未部署是「部署」，已部署是「卸载」。设置收成齿轮，工具页只列四个 Keysmith。\n\n## 这一版有什么\n\n- 打开页面和切换工具都先读本机状态。部署成功后只剩「卸载」，卸载成功后回到「部署」。失败停在原来那颗按钮旁边，可以重试。\n- 四个工具都是整机部署一次。设置里不再有开机启动、静默启动、Claude 默认范围。\n- 右上角是齿轮。浅色主题仍用太阳。\n- 工具页是 Claude Keysmith、Codex Keysmith、Grok Keysmith、Zcode Keysmith，各自带仓库链接。不再显示路径、官方产品或高级工具。\n- 问题上报会找到用户终端里已经登录的 GitHub CLI。找不到或没登录时，仍打开预填好的浏览器草稿。截图要到浏览器里补。\n\n## 安装\n\n- 已安装 `v0.1.3` 或 `v0.1.4`：可以在应用内更新到 `v0.1.7`。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.1.7_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.1.7_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41191140,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.7_aarch64.dmg",
+        "size": 42804228,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/Keysmith.Switch_0.1.7_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.7_x64-setup.exe",
+        "size": 40850042,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/Keysmith.Switch_0.1.7_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.7_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/Keysmith.Switch_0.1.7_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1844,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.7/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.6",
+    "name": "Keysmith Switch v0.1.6",
+    "date": "2026-09-23T15:58:54Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.1.6",
+    "body": "首屏改为四个 Harness。选中一个之后只有部署和卸载，各一次确认、一次结果。\n\n- 首屏是 Claude Code、Codex、Grok Build、ZCode。提示词库、范围、诊断、搜索、标签、排序和新建离开首屏。已有提示词数据保留。\n- 部署拉取该工具仓库当前默认提示词，写入本机库，再经现有 sidecar 部署。卸载走同一条确认后的停用路径。\n- Claude 用 examples/claude-project-rules.md，Codex 用 examples/gpt-overlay.md，Grok 用 examples/grok-unrestricted.md，ZCode 用 examples/system-role.md。\n- 没有可自动部署的情况停在同一个按钮的失败态，原因写在旁边，可以重试。\n\n已安装 v0.1.3 或 v0.1.4 可以在应用内更新。v0.1.1 仍须手动安装。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 41185172,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.6_aarch64.dmg",
+        "size": 42758386,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/Keysmith.Switch_0.1.6_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.6_x64-setup.exe",
+        "size": 40841279,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/Keysmith.Switch_0.1.6_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.6_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/Keysmith.Switch_0.1.6_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1844,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.6/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.5",
+    "name": "Keysmith Switch v0.1.5",
+    "date": "2026-09-23T12:44:18Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.1.5",
+    "body": "Bug fixes and updater reliability improvements.",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40982207,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.5_aarch64.dmg",
+        "size": 42563605,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/Keysmith.Switch_0.1.5_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.5_x64-setup.exe",
+        "size": 40725645,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/Keysmith.Switch_0.1.5_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.5_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/Keysmith.Switch_0.1.5_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 2024,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.5/SHA256SUMS.txt"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.4",
+    "name": "Keysmith Switch v0.1.4",
+    "date": "2026-09-22T08:04:51Z",
+    "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/tag/v0.1.4",
+    "body": "# Keysmith Switch v0.1.4\n\n这一版接替四个独立桌面安装包。之后只维护 Keysmith Switch。已发出的安装包不撤回，也不改成各自仓库的 Latest。\n\n- Claude [`desktop-v0.1.0-beta.3`](https://github.com/Jia-Ethan/claude-keysmith/releases/tag/desktop-v0.1.0-beta.3)，sidecar v7.2\n- Grok [`desktop-v0.1.0-beta.5`](https://github.com/Jia-Ethan/grok-keysmith/releases/tag/desktop-v0.1.0-beta.5)，sidecar v0.6.1\n- Codex [`desktop-v0.6.0-beta.2`](https://github.com/Jia-Ethan/codex-keysmith/releases/tag/desktop-v0.6.0-beta.2)，sidecar v0.6.0\n- Zcode [`desktop-v0.1.0-beta.1`](https://github.com/Jia-Ethan/zcode-keysmith/releases/tag/desktop-v0.1.0-beta.1)，sidecar 0.3.2，仍是 prerelease\n\n范围见 [keysmith-switch#6](https://github.com/Jia-Ethan/keysmith-switch/issues/6)。\n\n## 这一版有什么\n\n- sidecar 钉到上面四个桌面正在发的版本。Zcode 没有 `v0.3.2` tag，钉的是桌面源码 `7348b875`，不是 CLI Latest `v0.3.1`。\n- Claude 安装补上 `--runtime`、`--append-file`、`--max-tokens`。可以列出备份，并按名称还原。\n- Grok 确认时带上 CLI 的 preview token，并支持 `--reconcile`。`run` 和 `breaktest` 是真实调用，输出按行显示，可以取消。\n- Codex 补上 scenario 的 status、deploy、uninstall、recover，以及 fixture 的 scaffold、list、uninstall。仍是英文文本，不使用 `--preset`。内置 overlay 作为可导入的提示词。\n- `v0.1.1` 检测到正式版时不再提供必然失败的「更新并重启」，改为手动安装说明和官方下载页。签名不符的英文错误留在详情里。未知或为零的体积不再显示 `0 B`。签名失败仍保留当前版本。\n\n## 安装\n\n- 已安装 `v0.1.3`：可以在应用内更新到 `v0.1.4`。\n- 仍在 `v0.1.1`：内置的是测试 updater 公钥，必须手动安装本版本。\n- macOS Apple Silicon：`Keysmith.Switch_0.1.4_aarch64.dmg`\n- Windows x64：`Keysmith.Switch_0.1.4_x64-setup.exe`\n\n安装包不使用 Apple Developer ID、公证或 Windows Authenticode。更新包使用独立的生产 minisign 密钥签名。",
+    "assets": [
+      {
+        "name": "Keysmith.Switch.app.tar.gz",
+        "size": 40683225,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/Keysmith.Switch.app.tar.gz"
+      },
+      {
+        "name": "Keysmith.Switch.app.tar.gz.sig",
+        "size": 416,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/Keysmith.Switch.app.tar.gz.sig"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.4_aarch64.dmg",
+        "size": 42277850,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/Keysmith.Switch_0.1.4_aarch64.dmg"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.4_x64-setup.exe",
+        "size": 40498877,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/Keysmith.Switch_0.1.4_x64-setup.exe"
+      },
+      {
+        "name": "Keysmith.Switch_0.1.4_x64-setup.exe.sig",
+        "size": 428,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/Keysmith.Switch_0.1.4_x64-setup.exe.sig"
+      },
+      {
+        "name": "latest.json",
+        "size": 1844,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/latest.json"
+      },
+      {
+        "name": "provenance.json",
+        "size": 173,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/provenance.json"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 668,
+        "url": "https://github.com/Jia-Ethan/keysmith-switch-releases/releases/download/v0.1.4/SHA256SUMS.txt"
+      }
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "fetchedAt": "2026-10-09T20:06:59.834Z",
+  "repos": {
+    "keysmith-switch": {
+      "stars": 200,
+      "url": "https://github.com/Jia-Ethan/keysmith-switch",
+      "description": "Unified desktop manager for Keysmith prompt and instruction profiles."
+    },
+    "codex-keysmith": {
+      "stars": 4715,
+      "url": "https://github.com/Jia-Ethan/codex-keysmith",
+      "description": "Versioned Codex instruction deployment with preview, ownership manifests, hook isolation, scenario evaluation, and recovery."
+    },
+    "claude-keysmith": {
+      "stars": 847,
+      "url": "https://github.com/Jia-Ethan/claude-keysmith",
+      "description": "Managed Claude Code instruction deployment with safe CLI recovery and an unsigned macOS/Windows desktop beta."
+    },
+    "grok-keysmith": {
+      "stars": 486,
+      "url": "https://github.com/Jia-Ethan/grok-keysmith",
+      "description": "Preview-first Grok Build instruction deployment with compat and hook isolation, durable recovery, and layered uninstall."
+    },
+    "zcode-keysmith": {
+      "stars": 331,
+      "url": "https://github.com/Jia-Ethan/zcode-keysmith",
+      "description": "ZCode App managed true system-role entrypoint"
+    },
+    "keysmith-switch-extensions": {
+      "stars": 4,
+      "url": "https://github.com/Jia-Ethan/keysmith-switch-extensions",
+      "description": null
+    }
+  }
+}
