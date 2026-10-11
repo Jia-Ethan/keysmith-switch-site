@@ -35,6 +35,23 @@ SITE_URL=https://jia-ethan.github.io BASE_PATH=/keysmith-switch-site npm run bui
 
 文档写的是 App 当前版本的真实行为，改动前请先对照 `keysmith-switch` 的源码与发布说明。
 
+## App 更新后要检查什么
+
+版本号、安装包、下载链接、更新日志和星标数会自动同步，其余内容写的是某个 App 版本的实际行为，App 改了要跟着改。发版后对照 App 仓库的发布说明和改动过的源码，按下表检查（`zh` 和 `en` 两套都要改）：
+
+| App 的改动 | 要检查的文件 |
+| --- | --- |
+| 适配器版本（`ToolKind::expected_version`） | `src/components/AgentCards.astro`；`src/content/docs/*/02-concepts.md`、`08-agents.md` |
+| 某个 Agent 的写入方式、限制 | `src/i18n/ui.ts` 的 `cards.agents`；`src/content/docs/*/08-agents.md` |
+| 部署、清理、回滚、输入替换、拓展的行为或界面文案 | `src/content/docs/*/` 对应章节；`src/data/help.ts`；`src/i18n/ui.ts` 的 `tour` |
+| 界面明显改版 | 重新录制导览视频和短片，见下一节；必要时改 `recording/scenes.mjs` 和 `recording/demo-backend.mjs` |
+| 系统要求、安装方式、首次打开的提示 | `src/i18n/ui.ts` 的 `dl`、`download`；`src/content/docs/*/01-quickstart.md`；`src/data/help.ts` |
+| 联网行为（检查更新、公告、拓展等） | `src/content/docs/*/10-privacy.md`、`09-how-it-works.md`；`src/data/help.ts`；`src/i18n/ui.ts` 的 `principles` |
+| 社区与反馈渠道 | `src/lib/release.ts`；`src/components/Nav.astro`、`Footer.astro`；`src/data/help.ts` |
+| 支持的 Agent 增减 | 以上大部分，加上 `src/assets/agents/` 的图标 |
+
+改完后运行 `npm run build`、`node scripts/check-dist.mjs` 和 `npx astro check`，在本地看一遍中英文页面再合并。
+
 ## 录制产品视频
 
 视频是 Keysmith Switch 真实前端在浏览器里运行、由脚本操作录下来的，不是手工剪辑的素材。
