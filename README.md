@@ -1,6 +1,6 @@
 # Keysmith Switch 官网
 
-[Keysmith Switch](https://github.com/Jia-Ethan/keysmith-switch) 的产品网站：首页、下载、更新日志、文档、帮助，中文（`/`）与英文（`/en/`）两套。静态站点，Astro 7 构建。
+[Keysmith Switch](https://github.com/Jia-Ethan/keysmith-switch) 的产品网站（<https://keysmithswitch.com/>）：首页、下载、更新日志、文档、帮助，中文（`/`）与英文（`/en/`）两套。静态站点，Astro 7 构建。
 
 ## 本地开发
 
@@ -12,15 +12,17 @@ npm run preview
 node scripts/check-dist.mjs   # 检查 dist/ 里的链接、资源与中英文页面配对
 ```
 
-`SITE_URL` 和 `BASE_PATH` 决定站点地址，例如 GitHub Pages 项目页：
+`SITE_URL` 和 `BASE_PATH` 决定站点地址。按线上域名构建：
 
 ```bash
-SITE_URL=https://jia-ethan.github.io BASE_PATH=/keysmith-switch-site npm run build
+SITE_URL=https://keysmithswitch.com npm run build
 ```
+
+不用自定义域名、发布到 GitHub Pages 项目页时，再加上路径：`BASE_PATH=/keysmith-switch-site`。
 
 ## 部署
 
-推送到 `main` 后，GitHub Actions（`.github/workflows/deploy.yml`）会同步发布数据、构建、检查链接，再发布到 GitHub Pages。每天还会自动重建一次，拿到新版本和星标数；在 Actions 页也可以手动运行。站点地址和路径由 Pages 设置决定，换成自定义域名时不用改代码。
+推送到 `main` 后，GitHub Actions（`.github/workflows/deploy.yml`）会同步发布数据、构建、检查链接，再发布到 GitHub Pages。每天还会自动重建一次，拿到新版本和星标数；在 Actions 页也可以手动运行。站点地址和路径由 Pages 设置决定，换成自定义域名时不用改代码。现在的自定义域名是 `keysmithswitch.com`，在 Cloudflare 注册并解析，HTTPS 也由 Cloudflare 提供。
 
 ## 内容从哪里来
 
