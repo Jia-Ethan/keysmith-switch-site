@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import Rich from "../components/Rich.astro";
 import Icon from "../components/Icon.astro";
 import { t, href, type Lang } from "../i18n/ui";
-import { PACKS, pick, packAccent, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN, REQUEST_NEW, REQUEST_POOL } from "../lib/community";
+import { PACKS, pick, packAccent, kindLabel, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN, REQUEST_NEW, REQUEST_POOL } from "../lib/community";
 
 interface Props {
   lang: Lang;
@@ -51,7 +51,7 @@ const contributing = lang === "zh" ? CONTRIBUTING : CONTRIBUTING_EN;
                     ))}
                   </span>
                   <span class="gl-meta mono">
-                    {pack.kind === "rules" ? p.rulesKind : p.items(pack.item_count)} · v{pack.version}
+                    {kindLabel(pack, p)} · v{pack.version}
                   </span>
                 </div>
               </a>

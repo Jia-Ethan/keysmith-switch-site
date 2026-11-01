@@ -2,7 +2,19 @@
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import { t, href, type Lang } from "../i18n/ui";
-import { pick, packSource, packAccent, requestUrl, TOOL_LABEL, type Pack } from "../lib/community";
+import {
+  pick,
+  packSource,
+  packAccent,
+  requestUrl,
+  kindLabel,
+  componentPath,
+  componentSource,
+  componentTarget,
+  invocation,
+  TOOL_LABEL,
+  type Pack,
+} from "../lib/community";
 import { formatDate } from "../lib/release";
 
 interface Props {
@@ -15,7 +27,15 @@ const p = d.packs;
 const name = pick(pack.name, lang);
 const summary = pick(pack.meta.summary, lang) || pick(pack.description, lang);
 const source = packSource(pack);
-const kindLabel = pack.kind === "rules" ? p.rulesKind : p.items(pack.item_count);
+const holds = kindLabel(pack, p);
+const components = pack.kind === "harness" ? (pack.components ?? []) : [];
+// One row per component and agent: where it is in the pack, where it goes.
+const installRows = components.flatMap((c) =>
+  c.tools.map((tool) => ({ c, tool, from: componentPath(c), to: componentTarget(c, tool) })).filter((row) => row.to),
+);
+const hasSkill = components.some((c) => c.type === "skill");
+const sharedSkills = components.some((c) => c.type === "skill" && c.tools.includes("codex"));
+const codexAgent = components.some((c) => c.type === "agent" && c.tools.includes("codex"));
 const request = pack.meta.request;
 const authorName = pack.meta.author.name ?? `@${pack.meta.author.handle}`;
 ---
@@ -66,7 +86,7 @@ const authorName = pack.meta.author.name ?? `@${pack.meta.author.handle}`;
         <dd class="mono">v{pack.version}</dd>
       </div>
       <div class="pk-fact">
-        <dt>{kindLabel}</dt>
+        <dt>{holds}</dt>
         <dd class="mono">{(pack.size / 1024).toFixed(1)} KB</dd>
       </div>
       {
@@ -74,6 +94,14 @@ const authorName = pack.meta.author.name ?? `@${pack.meta.author.handle}`;
           <div class="pk-fact">
             <dt>{p.updated}</dt>
             <dd class="mono">{formatDate(`${pack.meta.submitted_at}T00:00:00Z`, lang)}</dd>
+          </div>
+        )
+      }
+      {
+        pack.kind === "harness" && pack.tier === 1 && (
+          <div class="pk-fact">
+            <dt>{p.tierTitle}</dt>
+            <dd>{p.tier1}</dd>
           </div>
         )
       }
@@ -103,9 +131,60 @@ const authorName = pack.meta.author.name ?? `@${pack.meta.author.handle}`;
       )
     }
 
+    {
+      components.length > 0 && (
+        <ul class="pk-items">
+          {components.map((c) => (
+            <li class="pk-item">
+              <span class="pk-item-tool chip">{p.componentType[c.type]}</span>
+              <a class="pk-item-name mono" href={componentSource(pack, c)} target="_blank" rel="noopener">{invocation(c)}</a>
+              <span class="pk-item-title">{pick(c.title, lang)}</span>
+              <span class="pk-item-tags mono">{c.tools.map((tool) => TOOL_LABEL[tool]).join(" · ")}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
     <div class="pk-how">
       <h2 class="h3">{p.howTitle}</h2>
-      <p>{p.how}</p>
+      <p>{components.length > 0 ? p.harnessHow : p.how}</p>
+      {
+        installRows.length > 0 && (
+          <div class="pk-install">
+            <table>
+              <thead>
+                <tr>
+                  <th>{p.colComponent}</th>
+                  <th>{p.colAgent}</th>
+                  <th>{p.colFrom}</th>
+                  <th>{p.colTo}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {installRows.map((row) => (
+                  <tr>
+                    <td class="mono">{invocation(row.c)}</td>
+                    <td>{TOOL_LABEL[row.tool]}</td>
+                    <td class="mono">{row.from}</td>
+                    <td class="mono">{row.to}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+      {
+        installRows.length > 0 && (
+          <ul class="pk-notes">
+            {hasSkill && <li>{p.noteSkillFolder}</li>}
+            {sharedSkills && <li>{p.noteSharedSkills}</li>}
+            {codexAgent && <li>{p.noteCodexAgent}</li>}
+            <li>{p.noteEnv}</li>
+          </ul>
+        )
+      }
       <div class="pk-how-acts">
         <a class="btn-line" href={source} target="_blank" rel="noopener"><Icon name="github" size={14} /><span>{p.view}</span></a>
         <a class="link-more" href={href(lang, "/download/")}><span>{p.starCta}</span></a>
@@ -208,6 +287,73 @@ const authorName = pack.meta.author.name ?? `@${pack.meta.author.handle}`;
   .pk-item-tags {
     font-size: 11px;
     color: var(--ink-3);
+  }
+  .pk-item-name {
+    font-size: var(--t-sm);
+    color: var(--accent);
+    text-decoration: none;
+  }
+  @media (max-width: 640px) {
+    .pk-item {
+      flex-wrap: wrap;
+      row-gap: 6px;
+    }
+    .pk-item-title {
+      flex: 1 1 100%;
+      order: 3;
+    }
+    .pk-item-tags {
+      order: 4;
+    }
+  }
+  .pk-item-name:hover {
+    text-decoration: underline;
+  }
+
+  .pk-install {
+    overflow-x: auto;
+    margin: 0 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+  .pk-install table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--t-sm);
+  }
+  .pk-install th,
+  .pk-install td {
+    padding: 9px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .pk-install tr:last-child td {
+    border-bottom: none;
+  }
+  .pk-install th {
+    font-size: var(--t-label);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .pk-install td {
+    color: var(--ink-1);
+  }
+  .pk-install td.mono {
+    font-size: 12px;
+  }
+  .pk-notes {
+    margin: 0 0 18px;
+    padding-left: 18px;
+    color: var(--ink-2);
+    font-size: var(--t-sm);
+    max-width: 72ch;
+  }
+  .pk-notes li + li {
+    margin-top: 4px;
   }
 
   .pk-how {

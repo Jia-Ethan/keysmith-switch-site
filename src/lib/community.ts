@@ -16,11 +16,22 @@ export type PackMeta = {
   request?: { issue: number; by?: string };
 };
 
+export type ComponentType = "skill" | "command" | "agent" | "rule";
+
+/** One component of a harness pack, as the index lists it (no file contents). */
+export type Component = {
+  id: string;
+  type: ComponentType;
+  name: string;
+  tools: Tool[];
+  title: Localized;
+};
+
 export type Pack = {
   id: string;
   version: string;
   min_app_version: string;
-  kind: "prompts" | "rules";
+  kind: "prompts" | "rules" | "harness";
   name: Localized;
   description: Localized;
   tools: Tool[];
@@ -34,6 +45,9 @@ export type Pack = {
   // gains them later; the current index carries only item_count.
   license?: { spdx?: string };
   items?: { id: string; tool: Tool; title: Localized; tags?: string[] }[];
+  /** Harness packs only: the tier (1 = nothing runs code) and the components. */
+  tier?: number;
+  components?: Component[];
 };
 
 export const COMMUNITY_REPO = "https://github.com/Jia-Ethan/keysmith-community-packs";
@@ -56,6 +70,46 @@ export const PACKS = (community.packs as Pack[])
  *  in-app install does not exist yet. */
 export function packSource(pack: Pack): string {
   return `${COMMUNITY_REPO}/tree/main/packs/${pack.id}`;
+}
+
+/** Where a component sits inside its pack. Fixed by the format (SPEC §2.2): a skill
+ *  is a folder, every other component is one file. */
+export function componentPath(c: Component): string {
+  return c.type === "skill" ? `components/${c.id}/` : `components/${c.id}.md`;
+}
+
+/** The component on GitHub: a folder view for a skill, the file for the rest. */
+export function componentSource(pack: Pack, c: Component): string {
+  const view = c.type === "skill" ? "tree" : "blob";
+  return `${COMMUNITY_REPO}/${view}/main/packs/${pack.id}/${componentPath(c).replace(/\/$/, "")}`;
+}
+
+/** Where a component goes on each agent: what the app will do, and what a manual
+ *  install copies to. Mirrors the placement table in SPEC §2.2. */
+export function componentTarget(c: Component, tool: Tool): string | null {
+  const n = c.name;
+  const table: Record<ComponentType, Partial<Record<Tool, string>>> = {
+    skill: { claude: `~/.claude/skills/${n}/`, codex: `~/.agents/skills/${n}/`, grok: `~/.grok/skills/${n}/` },
+    command: { claude: `~/.claude/commands/${n}.md`, grok: `~/.grok/commands/${n}.md` },
+    agent: { claude: `~/.claude/agents/${n}.md`, codex: `~/.codex/agents/${n}.toml`, grok: `~/.grok/agents/${n}.md` },
+    rule: { claude: `~/.claude/rules/${n}.md`, grok: `~/.grok/rules/60-${n}.md` },
+  };
+  return table[c.type][tool] ?? null;
+}
+
+/** How a user calls it: skills and commands are slash commands. */
+export function invocation(c: Component): string {
+  return c.type === "skill" || c.type === "command" ? `/${c.name}` : c.name;
+}
+
+/** Card and fact label for what a pack holds. */
+export function kindLabel(
+  pack: Pack,
+  p: { rulesKind: string; items: (n: number) => string; components: (n: number) => string },
+): string {
+  if (pack.kind === "rules") return p.rulesKind;
+  if (pack.kind === "harness") return p.components(pack.components?.length ?? 0);
+  return p.items(pack.item_count);
 }
 
 /** Pick a localized string, preferring the page language, then the other
