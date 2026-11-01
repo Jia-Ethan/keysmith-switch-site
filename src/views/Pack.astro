@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import { t, href, type Lang } from "../i18n/ui";
-import { pick, packSource, packAccent, TOOL_LABEL, type Pack } from "../lib/community";
+import { pick, packSource, packAccent, requestUrl, TOOL_LABEL, type Pack } from "../lib/community";
 import { formatDate } from "../lib/release";
 
 interface Props {
@@ -16,6 +16,8 @@ const name = pick(pack.name, lang);
 const summary = pick(pack.meta.summary, lang) || pick(pack.description, lang);
 const source = packSource(pack);
 const kindLabel = pack.kind === "rules" ? p.rulesKind : p.items(pack.item_count);
+const request = pack.meta.request;
+const authorName = pack.meta.author.name ?? `@${pack.meta.author.handle}`;
 ---
 
 <Base lang={lang} title={name} description={summary} active="packs">
@@ -26,12 +28,29 @@ const kindLabel = pack.kind === "rules" ? p.rulesKind : p.items(pack.item_count)
       <h1 class="display">{name}</h1>
       <p class="lead">{summary}</p>
       <p class="pk-author">
-        {p.by}
+        {
+          request?.by && (
+            <>
+              <span>{p.ideaBy}</span>
+              <a href={`https://github.com/${request.by}`} target="_blank" rel="noopener">@{request.by}</a>
+              <span class="pk-sep">·</span>
+            </>
+          )
+        }
+        <span>{request?.by ? p.builtBy : p.by}</span>
         {
           pack.meta.author.url ? (
-            <a href={pack.meta.author.url} target="_blank" rel="noopener">{pack.meta.author.name ?? `@${pack.meta.author.handle}`}</a>
+            <a href={pack.meta.author.url} target="_blank" rel="noopener">{authorName}</a>
           ) : (
-            <span>{pack.meta.author.name ?? `@${pack.meta.author.handle}`}</span>
+            <span>{authorName}</span>
+          )
+        }
+        {
+          request && (
+            <>
+              <span class="pk-sep">·</span>
+              <a href={requestUrl(request.issue)} target="_blank" rel="noopener">{p.fromRequest(request.issue)}</a>
+            </>
           )
         }
       </p>
@@ -114,6 +133,14 @@ const kindLabel = pack.kind === "rules" ? p.rulesKind : p.items(pack.item_count)
   .pk-author {
     margin: 14px 0 0;
     font-size: var(--t-sm);
+    color: var(--ink-3);
+  }
+  .pk-author {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pk-sep {
     color: var(--ink-3);
   }
   .pk-author a {
