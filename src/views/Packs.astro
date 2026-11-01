@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import Rich from "../components/Rich.astro";
 import Icon from "../components/Icon.astro";
 import { t, href, type Lang } from "../i18n/ui";
-import { PACKS, pick, packAccent, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN } from "../lib/community";
+import { PACKS, pick, packAccent, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN, REQUEST_NEW, REQUEST_POOL } from "../lib/community";
 
 interface Props {
   lang: Lang;
@@ -39,7 +39,9 @@ const contributing = lang === "zh" ? CONTRIBUTING : CONTRIBUTING_EN;
               <a class="gl-card-link" href={href(lang, `/packs/${pack.id}/`)} aria-label={pick(pack.name, lang)}>
                 <div class="gl-card-head">
                   <h2 class="gl-name">{pick(pack.name, lang)}</h2>
-                  <span class="gl-by mono">@{pack.meta.author.handle}</span>
+                  <span class="gl-by mono">
+                    {pack.meta.request?.by && <span class="gl-idea">💡@{pack.meta.request.by} · </span>}@{pack.meta.author.handle}
+                  </span>
                 </div>
                 <p class="gl-summary">{pick(pack.meta.summary, lang)}</p>
                 <div class="gl-foot">
@@ -58,6 +60,17 @@ const contributing = lang === "zh" ? CONTRIBUTING : CONTRIBUTING_EN;
         </ul>
       )
     }
+
+    <div class="gl-request">
+      <div class="gl-request-text">
+        <h2 class="h3">{p.requestTitle}</h2>
+        <p>{p.requestBody}</p>
+      </div>
+      <div class="gl-request-acts">
+        <a class="btn-line" href={REQUEST_NEW} target="_blank" rel="noopener"><Icon name="github" size={14} /><span>{p.requestNew}</span></a>
+        <a class="link-more" href={REQUEST_POOL} target="_blank" rel="noopener"><span>{p.requestPool}</span></a>
+      </div>
+    </div>
 
     <p class="gl-disclaimer">{p.disclaimer}</p>
   </section>
@@ -208,5 +221,34 @@ const contributing = lang === "zh" ? CONTRIBUTING : CONTRIBUTING_EN;
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
+  }
+  .gl-request {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding: 24px 28px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+  }
+  .gl-request-text {
+    flex: 1 1 420px;
+  }
+  .gl-request-text p {
+    margin: 8px 0 0;
+    color: var(--ink-2);
+    max-width: 64ch;
+  }
+  .gl-request-acts {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .gl-idea {
+    color: var(--ink-3);
   }
 </style>
