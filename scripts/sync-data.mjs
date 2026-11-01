@@ -5,6 +5,9 @@ import { writeFile, mkdir } from "node:fs/promises";
 const OWNER = "Jia-Ethan";
 const RELEASES_REPO = "keysmith-switch-releases";
 const REPOS = ["keysmith-switch", "codex-keysmith", "claude-keysmith", "grok-keysmith", "zcode-keysmith", "keysmith-switch-extensions"];
+// The community gallery reads the registry's committed index straight from the
+// default branch. No release needed; new packs appear on the next site build.
+const COMMUNITY_INDEX = "https://raw.githubusercontent.com/Jia-Ethan/keysmith-community-packs/main/community-index.json";
 const headers = { Accept: "application/vnd.github+json", "User-Agent": "keysmith-switch-site" };
 if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
@@ -43,8 +46,24 @@ async function repos() {
   return out;
 }
 
+// The gallery still builds if the registry is unreachable: keep whatever
+// src/data/community.json already holds rather than failing the whole sync.
+async function community() {
+  try {
+    const res = await fetch(COMMUNITY_INDEX, { headers: { "User-Agent": "keysmith-switch-site" } });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const index = await res.json();
+    if (typeof index !== "object" || !Array.isArray(index.packs)) throw new Error("unexpected shape");
+    return index;
+  } catch (err) {
+    console.warn(`community index: keeping existing src/data/community.json (${err.message})`);
+    return null;
+  }
+}
+
 await mkdir(new URL("../src/data/", import.meta.url), { recursive: true });
-const [rel, rep] = await Promise.all([releases(), repos()]);
+const [rel, rep, com] = await Promise.all([releases(), repos(), community()]);
 await writeFile(new URL("../src/data/releases.json", import.meta.url), JSON.stringify(rel, null, 2) + "\n");
 await writeFile(new URL("../src/data/repos.json", import.meta.url), JSON.stringify({ fetchedAt: new Date().toISOString(), repos: rep }, null, 2) + "\n");
-console.log(`releases: ${rel.length} (latest ${rel[0]?.tag}), repos: ${Object.keys(rep).length}`);
+if (com) await writeFile(new URL("../src/data/community.json", import.meta.url), JSON.stringify(com, null, 2) + "\n");
+console.log(`releases: ${rel.length} (latest ${rel[0]?.tag}), repos: ${Object.keys(rep).length}, community packs: ${com ? com.packs.length : "unchanged"}`);

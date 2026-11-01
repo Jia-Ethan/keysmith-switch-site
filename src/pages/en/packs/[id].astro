@@ -1,0 +1,11 @@
+---
+import Pack from "../../../views/Pack.astro";
+import { PACKS } from "../../../lib/community";
+
+export function getStaticPaths() {
+  return PACKS.map((pack) => ({ params: { id: pack.id }, props: { pack } }));
+}
+const { pack } = Astro.props;
+---
+
+<Pack lang="en" pack={pack} />
