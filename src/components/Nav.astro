@@ -6,7 +6,7 @@ import { REPO, REPOS, DISCUSSIONS, LINUXDO, TELEGRAM, stars } from "../lib/relea
 
 interface Props {
   lang: Lang;
-  active?: "product" | "download" | "changelog" | "docs" | "help";
+  active?: "product" | "download" | "packs" | "changelog" | "docs" | "help";
   /** The language switch goes to the homepage (error pages). */
   home?: boolean;
 }
@@ -30,6 +30,7 @@ const docsOn = active === "docs" || active === "changelog" || active === "help";
     <nav class="nav-links" aria-label={d.menu}>
       <a class:list={["nav-link", { "is-on": active === "product" }]} href={href(lang, "/")} aria-current={active === "product" ? "page" : undefined}>{d.product}</a>
       <a class:list={["nav-link", { "is-on": active === "download" }]} href={href(lang, "/download/")} aria-current={active === "download" ? "page" : undefined}>{d.download}</a>
+      <a class:list={["nav-link", { "is-on": active === "packs" }]} href={href(lang, "/packs/")} aria-current={active === "packs" ? "page" : undefined}>{d.packs}</a>
       <div class="nav-drop" data-drop>
         <button class:list={["nav-trig", { "is-on": docsOn }]} type="button" aria-expanded="false" aria-haspopup="true">
           <span class="nt-label">{d.docs}</span><Icon name="chev" class="chev" />
@@ -77,6 +78,7 @@ const docsOn = active === "docs" || active === "changelog" || active === "help";
   <div class="drawer" id="drawer">
     <a class:list={["dr-row", { "is-on": active === "product" }]} href={href(lang, "/")}>{d.product}</a>
     <a class:list={["dr-row", { "is-on": active === "download" }]} href={href(lang, "/download/")}>{d.download}</a>
+    <a class:list={["dr-row", { "is-on": active === "packs" }]} href={href(lang, "/packs/")}>{d.packs}</a>
     <p class="dr-h">{d.docs}</p>
     <a class:list={["dr-row", { "is-on": active === "docs" }]} href={href(lang, "/docs/")}>{d.docsIndex}</a>
     <a class:list={["dr-row", { "is-on": active === "changelog" }]} href={href(lang, "/changelog/")}>{d.changelog}</a>

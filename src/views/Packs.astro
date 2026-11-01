@@ -1,0 +1,212 @@
+---
+import Base from "../layouts/Base.astro";
+import Rich from "../components/Rich.astro";
+import Icon from "../components/Icon.astro";
+import { t, href, type Lang } from "../i18n/ui";
+import { PACKS, pick, packAccent, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN } from "../lib/community";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.packs;
+const contributing = lang === "zh" ? CONTRIBUTING : CONTRIBUTING_EN;
+---
+
+<Base lang={lang} title={p.title} description={p.lead} active="packs">
+  <section class="wrap page-top">
+    <div class="page-head">
+      <h1 class="display"><Rich segs={p.h1} /></h1>
+      <p class="lead">{p.lead}</p>
+    </div>
+
+    <div class="gl-bar">
+      <span class="gl-count mono">{p.count(PACKS.length)}</span>
+      <div class="gl-bar-acts">
+        <a class="btn-line" href={contributing} target="_blank" rel="noopener"><Icon name="github" size={14} /><span>{p.submit}</span></a>
+        <a class="link-more" href={href(lang, "/docs/extensions/")}><span>{p.official}</span></a>
+      </div>
+    </div>
+
+    {
+      PACKS.length === 0 ? (
+        <p class="gl-empty">{p.empty}</p>
+      ) : (
+        <ul class="gl-grid">
+          {PACKS.map((pack) => (
+            <li class="gl-card" style={`--pk-accent:${packAccent(pack)}`}>
+              <a class="gl-card-link" href={href(lang, `/packs/${pack.id}/`)} aria-label={pick(pack.name, lang)}>
+                <div class="gl-card-head">
+                  <h2 class="gl-name">{pick(pack.name, lang)}</h2>
+                  <span class="gl-by mono">@{pack.meta.author.handle}</span>
+                </div>
+                <p class="gl-summary">{pick(pack.meta.summary, lang)}</p>
+                <div class="gl-foot">
+                  <span class="gl-tools">
+                    {pack.tools.map((tool) => (
+                      <span class="chip">{TOOL_LABEL[tool]}</span>
+                    ))}
+                  </span>
+                  <span class="gl-meta mono">
+                    {pack.kind === "rules" ? p.rulesKind : p.items(pack.item_count)} · v{pack.version}
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <p class="gl-disclaimer">{p.disclaimer}</p>
+  </section>
+
+  <section class="wrap section gl-star">
+    <p class="gl-star-text">{p.star}</p>
+    <div class="gl-star-acts">
+      <a class="btn-line" href={COMMUNITY_REPO} target="_blank" rel="noopener"><Icon name="github" size={14} /><span>{COMMUNITY_REPO.replace("https://github.com/", "")}</span></a>
+      <a class="link-more" href={href(lang, "/download/")}><span>{p.starCta}</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .gl-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 28px 0 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .gl-count {
+    font-size: var(--t-label);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .gl-bar-acts {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .gl-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 16px;
+  }
+  .gl-card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out);
+  }
+  .gl-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--pk-accent, var(--accent));
+    opacity: 0.85;
+  }
+  .gl-card:hover {
+    border-color: var(--line-2);
+    transform: translateY(-2px);
+  }
+  .gl-card-link {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    padding: 20px 22px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .gl-card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .gl-name {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .gl-by {
+    flex: none;
+    font-size: var(--t-label);
+    color: var(--ink-3);
+  }
+  .gl-summary {
+    margin: 0;
+    font-size: var(--t-sm);
+    line-height: 1.55;
+    color: var(--ink-2);
+    flex: 1;
+  }
+  .gl-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  .gl-tools {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .gl-meta {
+    font-size: 11px;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  .gl-empty {
+    margin: 40px 0;
+    padding: 40px;
+    text-align: center;
+    border: 1px dashed var(--line-2);
+    border-radius: 14px;
+    color: var(--ink-2);
+  }
+  .gl-disclaimer {
+    margin: 28px 0 0;
+    font-size: var(--t-sm);
+    color: var(--ink-3);
+  }
+
+  .gl-star {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .gl-star-text {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: var(--t-sub);
+    color: var(--ink-1);
+  }
+  .gl-star-acts {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+</style>
