@@ -1,0 +1,23 @@
+---
+// Renders one node of a request row (see rowTree in lib/requests-shared.mjs).
+// Text is always rendered as text; links open GitHub in a new tab.
+interface Props {
+  node: any;
+}
+const { node } = Astro.props;
+const isText = typeof node === "string";
+const Tag = isText ? null : node.t;
+const ext = !isText && node.t === "a" ? { target: "_blank", rel: "noopener" } : {};
+---
+
+{
+  isText ? (
+    node
+  ) : (
+    <Tag class={node.c} href={node.h} {...(node.a ?? {})} {...ext}>
+      {(node.k ?? []).map((child: any) => (
+        <Astro.self node={child} />
+      ))}
+    </Tag>
+  )
+}

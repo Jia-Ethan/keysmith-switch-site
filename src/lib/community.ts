@@ -53,8 +53,6 @@ export type Pack = {
 export const COMMUNITY_REPO = "https://github.com/Jia-Ethan/keysmith-community-packs";
 export const CONTRIBUTING = `${COMMUNITY_REPO}/blob/main/CONTRIBUTING.md`;
 export const CONTRIBUTING_EN = `${COMMUNITY_REPO}/blob/main/CONTRIBUTING.en.md`;
-/** Open, confirmed requests waiting for someone to build them. */
-export const REQUEST_POOL = `${COMMUNITY_REPO}/issues?q=is%3Aissue+is%3Aopen+label%3Aready`;
 export const REQUEST_NEW = `${COMMUNITY_REPO}/issues/new?template=request.yml`;
 
 export function requestUrl(issue: number): string {

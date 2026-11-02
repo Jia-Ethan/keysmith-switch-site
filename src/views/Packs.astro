@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import Rich from "../components/Rich.astro";
 import Icon from "../components/Icon.astro";
 import { t, href, type Lang } from "../i18n/ui";
-import { PACKS, pick, packAccent, kindLabel, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN, REQUEST_NEW, REQUEST_POOL } from "../lib/community";
+import { PACKS, pick, packAccent, kindLabel, TOOL_LABEL, COMMUNITY_REPO, CONTRIBUTING, CONTRIBUTING_EN, REQUEST_NEW } from "../lib/community";
 
 interface Props {
   lang: Lang;
@@ -68,7 +68,7 @@ const contributing = lang === "zh" ? CONTRIBUTING : CONTRIBUTING_EN;
       </div>
       <div class="gl-request-acts">
         <a class="btn-line" href={REQUEST_NEW} target="_blank" rel="noopener"><Icon name="github" size={14} /><span>{p.requestNew}</span></a>
-        <a class="link-more" href={REQUEST_POOL} target="_blank" rel="noopener"><span>{p.requestPool}</span></a>
+        <a class="link-more" href={href(lang, "/requests/")}><span>{p.requestPool}</span></a>
       </div>
     </div>
 
