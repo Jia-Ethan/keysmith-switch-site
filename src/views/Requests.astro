@@ -1,0 +1,343 @@
+---
+import Base from "../layouts/Base.astro";
+import Rich from "../components/Rich.astro";
+import Icon from "../components/Icon.astro";
+import RequestNode from "../components/RequestNode.astro";
+import { t, href, type Lang } from "../i18n/ui";
+import { REQUEST_NEW } from "../lib/community";
+import { REQUESTS, REQUESTS_AT } from "../lib/requests";
+import { rowTree, sortRequests, counts, stamp, DEADLINE_DAYS, REQUEST_REPO } from "../lib/requests-shared.mjs";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+const s = d.requests;
+const items = sortRequests(REQUESTS);
+const now = new Date(REQUESTS_AT);
+const n = counts(items);
+const filters = ["all", "ready", "claimed", "review", "done"] as const;
+const guide = `https://github.com/${REQUEST_REPO}/blob/main/docs/${lang === "zh" ? "requests.md" : "requests.en.md"}`;
+const sub = (text: string) => text.replaceAll("{days}", String(DEADLINE_DAYS)).replaceAll("{remind}", "10");
+---
+
+<Base lang={lang} title={s.title} description={s.lead} active="requests">
+  <section class="wrap page-top">
+    <div class="page-head">
+      <h1 class="display"><Rich segs={s.h1} /></h1>
+      <p class="lead">{s.lead}</p>
+    </div>
+
+    <div class="rq-file">
+      <a class="btn-ink" href={REQUEST_NEW} target="_blank" rel="noopener"><Icon name="plus" size={14} /><span>{s.file}</span></a>
+      <span class="rq-file-hint">{s.fileHint}</span>
+    </div>
+
+    <ol class="rq-steps">
+      {
+        s.steps.map((step, i) => (
+          <li>
+            <span class="rq-step-n mono">0{i + 1}</span>
+            <strong>{step.t}</strong>
+            <span>{sub(step.d)}</span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="rq-board" data-rq-board data-lang={lang}>
+      <div class="rq-bar">
+        <div class="rq-filters" role="group" aria-label={s.title}>
+          {
+            filters.map((f) => (
+              <button type="button" class="rq-filter" data-filter={f} aria-pressed={f === "all" ? "true" : "false"}>
+                {s.filters[f]} <span class="rq-count mono" data-count={f}>{n[f]}</span>
+              </button>
+            ))
+          }
+        </div>
+        <span class="rq-stamp mono" data-rq-stamp>{s.updated.replace("{date}", stamp(REQUESTS_AT, lang))}</span>
+      </div>
+
+      <ul class="rq-list" data-rq-list>
+        {items.map((item) => <RequestNode node={rowTree(item, s, lang, now)} />)}
+      </ul>
+      <p class="rq-empty" data-rq-empty data-empty-all={s.empty} data-empty-filter={s.emptyFilter} hidden={items.length > 0}>{s.empty}</p>
+      <p class="rq-rules">{sub(s.rules)} <a class="text-link" href={guide} target="_blank" rel="noopener">{s.how}</a></p>
+    </div>
+
+    <script type="application/json" data-rq-strings set:html={JSON.stringify(s).replaceAll("<", "\\u003c")} />
+    <script type="application/json" data-rq-snapshot set:html={JSON.stringify(REQUESTS).replaceAll("<", "\\u003c")} />
+  </section>
+
+  <section class="wrap section gl-star">
+    <p class="gl-star-text">{s.outro}</p>
+    <div class="gl-star-acts">
+      <a class="btn-line" href={href(lang, "/packs/")}><span>{s.outroCta}</span></a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import "../scripts/requests";
+</script>
+
+<style is:global>
+  .rq-file {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+  }
+  .rq-file-hint {
+    font-size: var(--t-sm);
+    color: var(--ink-3);
+  }
+
+  .rq-steps {
+    list-style: none;
+    margin: 48px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .rq-steps li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    border-left: 1px solid var(--line);
+  }
+  .rq-steps li:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .rq-step-n {
+    font-size: var(--t-label);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .rq-steps strong {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 17px;
+  }
+  .rq-steps span:last-child {
+    font-size: var(--t-sm);
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  @media (max-width: 1000px) {
+    .rq-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .rq-steps li:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .rq-steps li:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+  @media (max-width: 600px) {
+    .rq-steps {
+      grid-template-columns: 1fr;
+    }
+    .rq-steps li {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .rq-steps li + li {
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  .rq-board {
+    margin-top: 48px;
+  }
+  .rq-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rq-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .rq-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 32px;
+    padding: 0 14px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: none;
+    color: var(--ink-2);
+    font: inherit;
+    font-size: var(--t-sm);
+    cursor: pointer;
+    transition: color var(--t-2) var(--e-out), background var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out);
+  }
+  .rq-filter:hover {
+    border-color: var(--ink-2);
+    color: var(--ink-1);
+  }
+  .rq-filter[aria-pressed="true"] {
+    background: var(--ink-1);
+    border-color: var(--ink-1);
+    color: var(--bg);
+  }
+  .rq-count {
+    font-size: 11px;
+    opacity: 0.75;
+  }
+  .rq-stamp {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .rq-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .rq-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .rq-row[hidden] {
+    display: none;
+  }
+  .rq-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .rq-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .rq-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 500;
+    background: rgba(var(--rule), 0.06);
+    color: var(--ink-2);
+  }
+  .rq-pill::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .rq-pill.is-ready {
+    background: color-mix(in srgb, var(--good) 14%, transparent);
+    color: var(--good);
+  }
+  .rq-pill.is-claimed {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .rq-pill.is-review {
+    background: color-mix(in srgb, var(--warn) 10%, transparent);
+    color: color-mix(in srgb, var(--warn) 80%, var(--ink-1));
+  }
+  .rq-pill.is-done {
+    color: var(--ink-3);
+  }
+  .rq-num {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .rq-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink-1);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .rq-title:hover {
+    color: var(--accent);
+  }
+  .rq-row.is-done .rq-title {
+    color: var(--ink-2);
+  }
+  .rq-line {
+    margin: 0;
+    font-size: var(--t-sm);
+    color: var(--ink-2);
+  }
+  .rq-line a,
+  .rq-by a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 3px;
+  }
+  .rq-line a:hover,
+  .rq-by a:hover {
+    color: var(--accent);
+    text-decoration-color: currentColor;
+  }
+  .rq-due {
+    color: var(--ink-3);
+  }
+  .rq-by {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--ink-3);
+  }
+  .rq-act {
+    flex: none;
+  }
+  @media (max-width: 640px) {
+    .rq-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+  }
+
+  .rq-empty {
+    margin: 32px 0 0;
+    padding: 40px;
+    text-align: center;
+    border: 1px dashed var(--line-2);
+    border-radius: 14px;
+    color: var(--ink-2);
+  }
+  .rq-empty[hidden] {
+    display: none;
+  }
+  .rq-rules {
+    margin: 24px 0 0;
+    font-size: var(--t-sm);
+    line-height: 1.7;
+    color: var(--ink-3);
+    max-width: 72ch;
+  }
+</style>
