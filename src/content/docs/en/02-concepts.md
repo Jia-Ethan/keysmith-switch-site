@@ -26,8 +26,10 @@ Switch never edits an agent's configuration itself. Each agent's open-source ada
 | --- | --- | --- |
 | Claude Code | claude-keysmith | 7.2 |
 | Codex | codex-keysmith | 0.6.0 |
-| Grok Build | grok-keysmith | 0.7.0 |
-| ZCode | zcode-keysmith | 0.3.2 |
+| Grok Build | grok-keysmith | 0.8.0 |
+| ZCode | zcode-keysmith | 0.3.5 |
+| pi | pi-keysmith | 0.2.0 |
+| DSH | dsh-keysmith | 0.4.1 |
 
 Adapter versions are pinned to the app: if they don't match, confirming a deploy is refused rather than risking the write. Adapters own the target format, backups, drift detection and recovery; Switch owns the library, versions, hash checks, plan previews and the operation log.
 
@@ -37,7 +39,7 @@ If someone (or another tool) edits an agent's configuration by hand after a depl
 
 ## Versions
 
-Before a cleanup, Switch saves the state as a **version**: the deployed prompt's text, the memory file's exact bytes and so on. Roll back to it or delete it under Settings → Versions. Don't confuse:
+Before a cleanup, Switch saves a local **version** covering everything you opted to clear: the deployed prompt's text, the memory file's exact bytes, memories folders, custom extensions (skills / rules / agents), and—if you opted to clear session history—the full session history and state databases as well. Roll back (which also saves a “before rollback” version first, so rollbacks themselves can be undone) or delete versions under Settings → Versions. Don't confuse:
 
 - **Edit history**: a prompt's own revisions, shown in the prompt's details.
-- **Versions**: snapshots of an agent's whole state before a cleanup, under Settings → Versions.
+- **Versions**: local snapshots of an agent's state taken before a cleanup or rollback, under Settings → Versions.

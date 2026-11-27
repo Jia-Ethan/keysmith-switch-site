@@ -13,7 +13,8 @@ page: privacy
 | `~/.keysmith-switch/keysmith-switch.db` | The prompt library and operation log |
 | `~/.keysmith-switch/prompts/<tool>/<prompt-id>.md` | Prompt text |
 | `~/.keysmith-switch/backups/<operation-id>/` | Backups taken before deploys |
-| `~/.keysmith-switch/snapshots/` | Versions saved before cleanups |
+| `~/.keysmith-switch/snapshots/` | Local versions saved before cleanups or rollbacks (including opted-in memories, extensions and session history; local only, never exported or uploaded) |
+| `~/.keysmith-switch/components/` | Install ledger for official component packs (`ledger.json`) |
 | `~/.keysmith-switch/logs/` | Logs (the relay's is `relay.log`) |
 | `~/.keysmith-switch/input-rewrite/` | Input rewrite's rule snapshot, port and forwarding addresses, and each agent's connection record |
 

@@ -25,7 +25,7 @@ Deploy plan (now → after) ── you confirm ──→ agent adapter ──→
 
 ## Boundaries it keeps
 
-- **Adapters write; Switch manages.** Every real configuration write goes through the four agent adapters; the app never edits an agent's configuration files itself. The only exceptions: emptying `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md` and moving `~/.codex/memories` during cleanup, after checking the path is exactly one of those, the file is a regular file and the folder isn't a link; and the one setting [input rewrite](/en/docs/rewrite/) changes when connecting.
+- **Adapters write; Switch manages.** Every prompt deploy and turn-off goes through the six agent adapters; the app never edits an agent's prompt configuration itself. The only exceptions: moving or emptying the exact paths you opt into during [cleanup](/en/docs/cleanup/) (after verifying no symlink or Windows junction along the path, grouping SQLite databases with their `-wal`/`-shm` sidecars, and redacting credentials before saving snapshots); plain-text component packs you confirm in [Extensions](/en/docs/extensions/); and the one setting [input rewrite](/en/docs/rewrite/) changes when connecting.
 - **Adapters get only the text.** Library Markdown carries metadata; the temporary file handed to an adapter holds only the prompt text and is removed after the preview or run.
 - **No quiet edits.** The same text for the same agent reuses the existing entry; if that entry has a different title or tags, the original is returned and deployed, and its metadata is left alone.
 - **Official text is never deployed for you.** Switch never deploys an official prompt on its own, and Quick Deploy never fetches from other Keysmith repositories. Official prompt packs can be installed as optional [extension packs](/en/docs/extensions/); once in the library, they still deploy only when you confirm.
@@ -33,10 +33,10 @@ Deploy plan (now → after) ── you confirm ──→ agent adapter ──→
 
 ## Where adapters come from
 
-The four adapters ship inside the app as sidecars (pinned in `third_party/keysmith/`), so you don't install the matching Keysmith repositories or Python. They're open-source MIT projects, each with its own command-line version.
+The six adapters ship inside the app as sidecars (pinned in `third_party/keysmith/`), so you don't install the matching Keysmith repositories or Python. They're open-source MIT projects, each with its own command-line version.
 
 ## In-app updates
 
 - After launch, the app checks the public `keysmith-switch-releases` repository for the latest stable version, then again every 6 hours, or when the window comes back to the front more than an hour after the last check.
 - Updates are signed with a separate production minisign key and verified before installing; on a bad signature, no network or an interrupted download, the current version stays.
-- Installing is up to you. On Windows, the system proxy is used.
+- Installing is up to you. Both macOS and Windows read the system HTTP proxy automatically.

@@ -28,6 +28,8 @@
   --agent-codex: #0d8a6a;
   --agent-grok: #2a2e38;
   --agent-zcode: #6d28d9;
+  --agent-pi: #2f6a44;
+  --agent-dsh: #376fb5;
 
   --serif: "Source Serif 4", "Noto Serif SC", "Songti SC", "STSong", Georgia, "Times New Roman", serif;
   --hanzi: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
@@ -84,6 +86,8 @@
   --agent-codex: #2ebe96;
   --agent-grok: #ced4de;
   --agent-zcode: #9e7cfa;
+  --agent-pi: #7fc29a;
+  --agent-dsh: #83b1ec;
 
   color-scheme: dark;
 }
@@ -113,6 +117,8 @@
     --agent-codex: #2ebe96;
     --agent-grok: #ced4de;
     --agent-zcode: #9e7cfa;
+    --agent-pi: #7fc29a;
+    --agent-dsh: #83b1ec;
     color-scheme: dark;
   }
 }

@@ -116,8 +116,9 @@ const chapterLabel = lang === "zh" ? `${d.chapter} ${num(entry.data.order)} ${d.
   const none = document.querySelector<HTMLElement>("[data-docs-none]")!;
   const groups = document.querySelector<HTMLElement>("[data-docs-groups]")!;
   const url = document.querySelector<HTMLElement>("[data-search-url]")?.dataset.searchUrl ?? "";
-  let index: Promise<{ t: string; u: string; k: string }[]> | null = null;
-  const load = () => (index ??= fetch(url).then((r) => (r.ok ? r.json() : [])).catch(() => []));
+  type SearchEntry = { t: string; u: string; k: string };
+  let index: Promise<SearchEntry[]> | null = null;
+  const load = (): Promise<SearchEntry[]> => (index ??= fetch(url).then((r) => (r.ok ? (r.json() as Promise<SearchEntry[]>) : [])).catch(() => []));
   input?.addEventListener("focus", () => void load(), { once: true });
   input?.addEventListener("input", async () => {
     const q = input.value.trim().toLowerCase();

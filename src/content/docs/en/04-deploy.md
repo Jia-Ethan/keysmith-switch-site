@@ -36,6 +36,6 @@ A blocked deploy **changes no files**. The dialog shows the adapter's reason and
 
 ## After a deploy
 
-- **Restart the agent.** Claude Code, Codex and Grok Build need a new session; ZCode needs to be reopened.
+- **Restart the agent.** Claude Code, Codex, Grok Build and pi need a new session; ZCode needs to be reopened; DSH needs its desktop app or service restarted.
 - **Records.** Every deploy and turn-off is logged; backups go in `~/.keysmith-switch/backups/<operation id>/`.
 - **No duplicates.** If the text matches a prompt already in the library, Switch reuses that entry instead of quietly changing its title or tags.
