@@ -5,7 +5,7 @@ import { REQUEST_REPO, DEADLINE_DAYS, cleanTitle, agentsFromBody, login, fromRes
 
 const OWNER = "Jia-Ethan";
 const RELEASES_REPO = "keysmith-switch-releases";
-const REPOS = ["keysmith-switch", "codex-keysmith", "claude-keysmith", "grok-keysmith", "zcode-keysmith", "keysmith-switch-extensions"];
+const REPOS = ["keysmith-switch", "codex-keysmith", "claude-keysmith", "grok-keysmith", "zcode-keysmith", "pi-keysmith", "dsh-keysmith", "keysmith-switch-extensions"];
 // The community gallery reads the registry's committed index straight from the
 // default branch. No release needed; new packs appear on the next site build.
 const COMMUNITY_INDEX = "https://raw.githubusercontent.com/Jia-Ethan/keysmith-community-packs/main/community-index.json";

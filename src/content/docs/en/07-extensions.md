@@ -1,6 +1,6 @@
 ---
 title: Extension packs
-lede: Extension packs are official prompt packs and rule packs that update on their own, apart from the app. Installing only adds to your library; nothing is deployed for you.
+lede: Extension packs are official prompt packs, rule packs and component packs that update on their own, apart from the app. Prompt packs only add to your library; component packs preview every path before writing.
 group: Go further
 order: 7
 page: extensions
@@ -15,7 +15,7 @@ Once on, the app downloads the list and the packs you choose, and uploads nothin
 ## Install and update
 
 - Each card shows the name, official badge, item count, size, version and install status.
-- **Installing only adds prompts to your library; nothing is deployed.** You still review a plan and confirm before deploying.
+- **Installing a prompt pack only adds prompts to your library; nothing is deployed.** You still review a plan and confirm before deploying.
 - When updates are out, the Extensions button shows how many; with two or more you can update them all at once.
 - **Prompts you've edited are never overwritten by an update**; the new text is saved beside yours.
 - Uninstalling removes prompts you haven't edited and no agent is using; edited or running ones stay.
@@ -31,7 +31,15 @@ The text of prompts from extension packs isn't shown and can't be edited, but th
 
 ## Rule packs
 
-Besides prompt packs, the source can publish rule packs for [input rewrite](/en/docs/rewrite/), declaring which agents they apply to with `tools`. Every rule is listed before you install; choose “Install and turn on” or “Install only”. When a pack you've turned on has an update, it switches only after you confirm.
+Besides prompt packs, the source can publish rule packs for [input rewrite](/en/docs/rewrite/), declaring which agents they apply to with `tools`. Standard rule packs list every rule before you install so you can choose “Install and turn on” or “Install only”; sealed rule packs hide individual entries while still letting you enable and update them. When a pack you've turned on has an update, it switches only after you confirm.
+
+## Component packs (harness packs)
+
+Since v0.9.0, the official source can install Tier 1 (plain-text, runs no code) **component packs** (`kind: "harness"`) directly, adding skills, commands, subagents or rules into each agent's folder:
+
+- Before writing, Switch lists every target path and flags any existing local file; conflicting files are skipped by default rather than silently overwritten.
+- Installed items are tracked in `~/.keysmith-switch/components/ledger.json` with content fingerprints: updates and uninstalls check every file and leave anything you edited by hand untouched.
+- Component packs in the [community packs](/en/packs/) gallery use the same format and are still copied by hand using the table on each pack's page.
 
 ## Source repository
 

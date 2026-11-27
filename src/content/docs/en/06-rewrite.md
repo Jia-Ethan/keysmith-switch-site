@@ -52,7 +52,7 @@ The [extensions](/en/docs/extensions/) source can also publish rule packs. Every
 
 **Disconnect** restores only the values Switch wrote that still hold what it wrote; if another tool changed them in the meantime, they're left alone. Your rules are kept.
 
-Deploying or turning off prompts never touches the settings above. Cleaning up an agent disconnects its input rewrite first.
+Deploying or turning off prompts never touches the settings above. Cleanup disconnects an agent's input rewrite only when you opt into **Logins, credentialed configs & caches**; default cleanup and other recoverable items leave input rewrite connected.
 
 ## No session storage
 
@@ -64,3 +64,4 @@ The relay doesn't store or log request content, rules or credentials. With subsc
 - **Codex**: needs a custom provider (`wire_api = "responses"`); Codex's built-in OpenAI sign-in can't be connected yet.
 - **ZCode**: Coding Plan sign-in isn't supported; add a provider that uses an API key.
 - **Grok Build**: Grok must have run once and fetched its model list; models added later go through the relay only after you reconnect. Models you configured on top of one of Grok's own models are kept out of the relay and listed in the details.
+- **pi and DSH**: input rewrite is not supported yet.

@@ -12,7 +12,7 @@ const zh = {
     siteName: "Keysmith Switch",
     title: "Keysmith Switch — AI 编程 Agent 的提示词管理器",
     description:
-      "Keysmith Switch 是一个桌面 App，管好你所有 AI 编程 Agent 的提示词：粘贴提示词，先看部署计划，确认后部署到 Claude Code、Codex、Grok Build 和 ZCode。",
+      "Keysmith Switch 是一个桌面 App，管好你所有 AI 编程 Agent 的提示词：粘贴提示词，先看部署计划，确认后部署到 Claude Code、Codex、Grok Build、ZCode、pi 和 DSH。",
   },
   nav: {
     skip: "跳到正文",
@@ -43,7 +43,7 @@ const zh = {
   hero: {
     kicker: "Keysmith Switch，AI 编程 Agent 的提示词管理器",
     title: [
-      { t: "四个 Agent。" },
+      { t: "六个 Agent。" },
       { t: "一个提示词库。", em: true },
       { t: "先看", brush: true },
       { t: "，再部署。", em: true },
@@ -62,10 +62,10 @@ const zh = {
     pause: "暂停",
     play: "播放",
     chapters: [
-      [{ t: "一个库，" }, { t: "四个 Agent。", em: true }],
+      [{ t: "一个库，" }, { t: "六个 Agent。", em: true }],
       [{ t: "粘贴提示词，" }, { t: "先看部署计划。", em: true }],
       [{ t: "⌘K，" }, { t: "想做什么都在这里。", em: true }],
-      [{ t: "清理之前，" }, { t: "先存一个版本。", em: true }],
+      [{ t: "分项清理，" }, { t: "先存一个版本。", em: true }],
     ] as Seg[][],
   },
   tour: {
@@ -76,7 +76,7 @@ const zh = {
     items: [
       {
         id: "agents",
-        title: "一个库，管四个 Agent",
+        title: "一个库，管六个 Agent",
         body: "提示词按 Agent 分开管理，带标签、搜索和排序。在左侧一键切换，整个窗口跟着换成那个 Agent 的颜色。",
       },
       {
@@ -86,8 +86,8 @@ const zh = {
       },
       {
         id: "cleanup",
-        title: "清理之前先存版本",
-        body: "「清理」把 Agent 清回空白，动手前先存一个版本。设置里的「版本」页可以回滚，回滚本身也能撤销。",
+        title: "分项清理，先存版本",
+        body: "「清理」默认只清 Keysmith 自身的部署与残留，不碰会话和登录；按需清理记忆、扩展或会话历史前，会先存进本机版本随时回滚，回滚本身也能撤销。",
       },
       {
         id: "palette",
@@ -102,7 +102,7 @@ const zh = {
       {
         id: "extensions",
         title: "拓展包",
-        body: "可选的官方提示词包，独立于 App 更新。安装只会放进提示词库，不会自动部署。",
+        body: "可选的官方提示词包、规则包和组件包，独立于 App 更新。提示词包安装只放进库不自动部署，组件包写入前逐项预览。",
       },
       {
         id: "adopt",
@@ -153,7 +153,7 @@ const zh = {
         yes: [
           "提示词写进 ~/.claude/keysmith/，CLAUDE.md 里加一段带标记的导入块",
           "停用时只移除这一段，你写的其他内容不动",
-          "清理可以清空 CLAUDE.md，要先勾选确认，动手前存版本",
+          "默认清理只停用部署；CLAUDE.md、扩展与会话历史按需勾选且均可回滚",
           "输入替换只改 settings.json 里的一项地址",
         ],
         no: ["输入替换不支持 Bedrock 和 Vertex"],
@@ -164,7 +164,7 @@ const zh = {
         yes: [
           "提示词放进 ~/.codex/，config.toml 写入 model_instructions_file",
           "写入前备份 config.toml；会干扰加载的 hooks.json 先隔离并留备份",
-          "清理可以清空 AGENTS.md；memories 文件夹要单独勾选",
+          "默认清理只停用部署；AGENTS.md、memories 与会话库按需勾选且可回滚，config.toml 保留",
           "输入替换新增一个 provider，原来的不改",
         ],
         no: ["输入替换需要使用自定义 provider"],
@@ -174,7 +174,7 @@ const zh = {
         who: "写进每个会话都会读取的 home rules",
         yes: [
           "提示词写进 ~/.grok/rules/99-keysmith.md，每个 Grok 会话都会读取",
-          "在 config.toml 里用一段标记关闭 Claude / Cursor 兼容层，并隔离 hooks",
+          "在 config.toml 里隔离兼容层与 hooks；支持用户区域，自定义模型不算漂移",
           "停用时只移除自己写入的文件和标记段",
           "输入替换在一对标记之间为每个模型写入转发地址",
         ],
@@ -185,18 +185,40 @@ const zh = {
         who: "作为真正的 system 角色生效",
         yes: [
           "提示词写进 ~/.zcode-keysmith/system-role.md，作为 system 角色生效",
-          "新版 ZCode 需要改动它自带的一个文件，改之前先备份，停用时还原",
-          "会设置几项环境变量，停用时恢复原来的值",
+          "新版 ZCode（3.12–4.0+）先备份 zcode.cjs 再按版本锚点修补，停用时原样还原",
+          "旧版通过环境变量生效，停用时恢复原值；清理会保护未还原时的备份",
           "输入替换改 provider_config.json 里的服务地址",
         ],
         no: ["输入替换不支持账号登录的 Coding Plan"],
         files: ["system-role.md", "provider_config.json"],
       },
+      pi: {
+        who: "直接托管全局 ~/.pi/agent/SYSTEM.md",
+        yes: [
+          "提示词写进 ~/.pi/agent/SYSTEM.md，写入前自动备份",
+          "停用时按原样还原，~/.pi/agent 不存在时不自动创建",
+          "不碰 APPEND_SYSTEM.md、AGENTS.md、设置与会话",
+          "清理只停用 Keysmith 部署，不动个人数据",
+        ],
+        no: ["暂不支持输入替换"],
+        files: ["SYSTEM.md"],
+      },
+      dsh: {
+        who: "通过托管 Cordis 插件注入 DSH 配置档",
+        yes: [
+          "优先部署到 profiles/desktop，未安装桌面端时使用 profiles/web",
+          "旧版 profiles/web 部署会在顶部提示一键迁入 profiles/desktop",
+          "停用时只移除托管插件，~/.dsh 不存在时不自动创建",
+          "清理只停用 Keysmith 部署，不碰配置、凭证与会话",
+        ],
+        no: ["暂不支持输入替换"],
+        files: ["profiles/desktop/", "profiles/web/"],
+      },
     },
   },
   footer: {
     blurb:
-      "Keysmith Switch 是一个桌面 App，管好你所有 AI 编程 Agent 的提示词：粘贴提示词，先看部署计划，确认后部署到 Claude Code、Codex、Grok Build 和 ZCode。",
+      "Keysmith Switch 是一个桌面 App，管好你所有 AI 编程 Agent 的提示词：粘贴提示词，先看部署计划，确认后部署到 Claude Code、Codex、Grok Build、ZCode、pi 和 DSH。",
     product: "产品",
     tour: "产品导览",
     extensions: "拓展包",
@@ -213,7 +235,7 @@ const zh = {
   download: {
     title: "下载",
     h1: [{ t: "Keysmith Switch，" }, { t: "适用于 macOS 与 Windows", em: true }] as Seg[],
-    lead: "原生桌面应用，支持 macOS 与 Windows。四个 Agent 的适配器都已装在 App 里，装好就能用，不需要另外安装任何东西。",
+    lead: "原生桌面应用，支持 macOS 与 Windows。六个 Agent 的适配器都已装在 App 里，装好就能用，不需要另外安装任何东西。",
     noteLead: "不用注册，也不用登录。",
     note: "装好打开就能用。提示词库保存在本机的 ~/.keysmith-switch/，卸载 App 也不会删除它。",
     tourLink: "看看产品导览",
@@ -234,8 +256,8 @@ const zh = {
         body: "按 Agent 分开管理，带标签、搜索和编辑历史。第一次打开时，会找出机器上已有的 Keysmith 提示词，让你选择导入。",
       },
       {
-        title: "四个内置适配器",
-        body: "Claude Code、Codex、Grok Build、ZCode 的适配器都随 App 一起安装和更新，不需要单独下载。",
+        title: "六个内置适配器",
+        body: "Claude Code、Codex、Grok Build、ZCode、pi、DSH 的适配器都随 App 一起安装和更新，不需要单独下载。",
       },
       {
         title: "应用内更新",
@@ -316,7 +338,7 @@ const zh = {
     tierTitle: "层级",
     tier1: "第 1 层 · 不运行代码",
     componentType: { skill: "技能", command: "命令", agent: "子 Agent", rule: "规则" },
-    harnessHow: "App 里还不能直接安装组件包，这是下一步要做的。现在可以手动装：按下表把每个组件从包里复制到对应 Agent 的目录。",
+    harnessHow: "官方组件包从 v0.9.0 起已在 App 的「拓展」页支持预览并一键安装；社区组件包暂需手动装：按下表把每个组件从包里复制到对应 Agent 的目录。",
     colComponent: "组件",
     colAgent: "Agent",
     colFrom: "包里的位置",
@@ -393,7 +415,7 @@ const en: Dict = {
     siteName: "Keysmith Switch",
     title: "Keysmith Switch — the prompt manager for your coding agents",
     description:
-      "Keysmith Switch is a desktop app for your coding agents' prompts: paste one in, read the deploy plan, and confirm to deploy it to Claude Code, Codex, Grok Build or ZCode.",
+      "Keysmith Switch is a desktop app for your coding agents' prompts: paste one in, read the deploy plan, and confirm to deploy it to Claude Code, Codex, Grok Build, ZCode, pi or DSH.",
   },
   nav: {
     skip: "Skip to content",
@@ -424,7 +446,7 @@ const en: Dict = {
   hero: {
     kicker: "Keysmith Switch, the prompt manager for your coding agents",
     title: [
-      { t: "Four agents. " },
+      { t: "Six agents. " },
       { t: "One prompt library. ", em: true },
       { t: "Look", em: true, brush: true },
       { t: " before you deploy.", em: true },
@@ -443,10 +465,10 @@ const en: Dict = {
     pause: "Pause",
     play: "Play",
     chapters: [
-      [{ t: "One library, " }, { t: "four agents.", em: true }],
+      [{ t: "One library, " }, { t: "six agents.", em: true }],
       [{ t: "Paste a prompt, " }, { t: "read the plan first.", em: true }],
       [{ t: "⌘K, " }, { t: "and it's right there.", em: true }],
-      [{ t: "Clean up, " }, { t: "with a version saved first.", em: true }],
+      [{ t: "Scoped cleanup, " }, { t: "with a version saved first.", em: true }],
     ],
   },
   tour: {
@@ -457,7 +479,7 @@ const en: Dict = {
     items: [
       {
         id: "agents",
-        title: "One library for four agents",
+        title: "One library for six agents",
         body: "Prompts are kept per agent, with tags, search and sorting. Switch agents from the rail and the whole window takes on that agent's color.",
       },
       {
@@ -467,8 +489,8 @@ const en: Dict = {
       },
       {
         id: "cleanup",
-        title: "Clean up, with a version saved first",
-        body: "Clean up returns an agent to a blank slate and saves a version first. Roll back from Settings → Versions; a rollback can be undone too.",
+        title: "Scoped cleanup, with a version saved first",
+        body: "Clean up defaults to removing only Keysmith's deployment and leftovers, leaving sessions and logins alone; opted-in memories, extensions or session history save to a local version first, and rollbacks can be undone too.",
       },
       {
         id: "palette",
@@ -483,7 +505,7 @@ const en: Dict = {
       {
         id: "extensions",
         title: "Extension packs",
-        body: "Optional official prompt packs that update apart from the app. Installing only adds prompts to your library; nothing is deployed for you.",
+        body: "Optional official prompt, rule and component packs that update apart from the app. Prompt packs only add to your library; component packs preview every path before writing.",
       },
       {
         id: "adopt",
@@ -534,7 +556,7 @@ const en: Dict = {
         yes: [
           "The prompt goes in ~/.claude/keysmith/, imported by a marked block in CLAUDE.md",
           "Turning it off removes only that block; the rest of the file stays",
-          "Clean up can empty CLAUDE.md, after you tick a box, with a version saved first",
+          "Default cleanup only turns off the deploy; CLAUDE.md, extensions and sessions are opt-in and recoverable",
           "Input rewrite changes only one address in settings.json",
         ],
         no: ["Input rewrite does not support Bedrock or Vertex"],
@@ -545,7 +567,7 @@ const en: Dict = {
         yes: [
           "The prompt goes in ~/.codex/ and config.toml gets model_instructions_file",
           "config.toml is backed up first; a hooks.json that would interfere is set aside with a backup",
-          "Clean up can empty AGENTS.md; the memories folder needs its own checkbox",
+          "Default cleanup only turns off the deploy; AGENTS.md, memories and sessions are opt-in and recoverable; config.toml stays",
           "Input rewrite adds a provider and leaves yours unchanged",
         ],
         no: ["Input rewrite needs a custom provider"],
@@ -555,7 +577,7 @@ const en: Dict = {
         who: "Written to home rules that every session reads",
         yes: [
           "The prompt goes in ~/.grok/rules/99-keysmith.md, read by every Grok session",
-          "A marked block in config.toml turns off the Claude / Cursor compat layers and sets hooks aside",
+          "Isolates compat layers and hooks in config.toml, with a user area so custom models don't trigger drift",
           "Turning it off removes only the file and block it wrote",
           "Input rewrite writes each model's forwarding address between a pair of markers",
         ],
@@ -566,18 +588,40 @@ const en: Dict = {
         who: "Applied as a true system role",
         yes: [
           "The prompt goes in ~/.zcode-keysmith/system-role.md and acts as the system role",
-          "Newer ZCode builds need one of ZCode's own files changed; it's backed up first and restored when turned off",
-          "A few environment variables are set and put back when turned off",
+          "Newer ZCode (3.12–4.0+) backs up zcode.cjs and patches the matching runtime anchor, restoring it on turn-off",
+          "Older builds use env vars restored on turn-off; cleanup protects backups if the runtime is still patched",
           "Input rewrite changes the service address in provider_config.json",
         ],
         no: ["Input rewrite does not support Coding Plan sign-in"],
         files: ["system-role.md", "provider_config.json"],
       },
+      pi: {
+        who: "Manages global ~/.pi/agent/SYSTEM.md directly",
+        yes: [
+          "Writes the prompt to ~/.pi/agent/SYSTEM.md, backing up first",
+          "Restores the original on turn-off; never creates ~/.pi/agent if absent",
+          "Leaves APPEND_SYSTEM.md, AGENTS.md, settings and sessions untouched",
+          "Clean up only turns off Keysmith's deploy and leaves personal data alone",
+        ],
+        no: ["Input rewrite is not supported yet"],
+        files: ["SYSTEM.md"],
+      },
+      dsh: {
+        who: "Injects a managed Cordis plugin into your DSH profile",
+        yes: [
+          "Targets profiles/desktop when DSH Desktop is present, otherwise profiles/web",
+          "Prompts one-click migration if an older deploy lives in profiles/web",
+          "Removes only the managed plugin on turn-off; never creates ~/.dsh if absent",
+          "Clean up only turns off Keysmith's deploy, leaving settings, credentials and sessions alone",
+        ],
+        no: ["Input rewrite is not supported yet"],
+        files: ["profiles/desktop/", "profiles/web/"],
+      },
     },
   },
   footer: {
     blurb:
-      "Keysmith Switch is a desktop app for your coding agents' prompts: paste one in, read the deploy plan, and confirm to deploy it to Claude Code, Codex, Grok Build or ZCode.",
+      "Keysmith Switch is a desktop app for your coding agents' prompts: paste one in, read the deploy plan, and confirm to deploy it to Claude Code, Codex, Grok Build, ZCode, pi or DSH.",
     product: "Product",
     tour: "Product tour",
     extensions: "Extension packs",
@@ -594,7 +638,7 @@ const en: Dict = {
   download: {
     title: "Download",
     h1: [{ t: "Keysmith Switch for " }, { t: "macOS and Windows", em: true }],
-    lead: "A native desktop app for macOS and Windows. The adapters for all four agents come inside it, so it works as soon as it's installed; there's nothing else to set up.",
+    lead: "A native desktop app for macOS and Windows. The adapters for all six agents come inside it, so it works as soon as it's installed; there's nothing else to set up.",
     noteLead: "No account, no sign-in.",
     note: "Install it and open it. Your library lives in ~/.keysmith-switch/ on your computer and stays there even if you uninstall the app.",
     tourLink: "See the product tour",
@@ -615,8 +659,8 @@ const en: Dict = {
         body: "Kept per agent, with tags, search and edit history. On first launch it finds Keysmith prompts already on your computer and lets you choose which to import.",
       },
       {
-        title: "Four built-in adapters",
-        body: "The adapters for Claude Code, Codex, Grok Build and ZCode install and update with the app; there's nothing to download separately.",
+        title: "Six built-in adapters",
+        body: "The adapters for Claude Code, Codex, Grok Build, ZCode, pi and DSH install and update with the app; there's nothing to download separately.",
       },
       {
         title: "In-app updates",
@@ -697,7 +741,7 @@ const en: Dict = {
     tierTitle: "Tier",
     tier1: "Tier 1 · runs no code",
     componentType: { skill: "Skill", command: "Command", agent: "Subagent", rule: "Rule" },
-    harnessHow: "The app can't install harness packs yet; that's the next step. Until then, install by hand: copy each component from the pack to the agent folder in the table.",
+    harnessHow: "Official harness packs install directly with path preview in Keysmith Switch v0.9.0+ under Extensions. Community harness packs still install by hand: copy each component from the pack to the agent folder in the table.",
     colComponent: "Component",
     colAgent: "Agent",
     colFrom: "In the pack",

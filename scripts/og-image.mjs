@@ -13,13 +13,13 @@ const b64 = (p) => fs.readFileSync(path.join(ROOT, p)).toString("base64");
 const COPY = {
   zh: {
     kicker: "Keysmith Switch",
-    title: `四个 Agent。<span class="em">一个提示词库。</span><br/><span class="brush">先看</span><span class="em">，再部署。</span>`,
-    sub: "Claude Code · Codex · Grok Build · ZCode",
+    title: `六个 Agent。<span class="em">一个提示词库。</span><br/><span class="brush">先看</span><span class="em">，再部署。</span>`,
+    sub: "Claude Code · Codex · Grok Build · ZCode · pi · DSH",
   },
   en: {
     kicker: "Keysmith Switch",
-    title: `Four agents. <i>One prompt library.</i><br/><i><span class="brush">Look</span> before you deploy.</i>`,
-    sub: "Claude Code · Codex · Grok Build · ZCode",
+    title: `Six agents. <i>One prompt library.</i><br/><i><span class="brush">Look</span> before you deploy.</i>`,
+    sub: "Claude Code · Codex · Grok Build · ZCode · pi · DSH",
   },
 };
 

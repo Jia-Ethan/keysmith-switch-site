@@ -8,7 +8,7 @@ page: quickstart
 
 ## 安装 Keysmith Switch
 
-Keysmith Switch 是一个桌面 App，支持 macOS（Apple Silicon，macOS 12 及以上）和 Windows（10 / 11，x64）。四个 Agent 的适配器都已经装在 App 里，不需要另外安装任何东西。
+Keysmith Switch 是一个桌面 App，支持 macOS（Apple Silicon，macOS 12 及以上）和 Windows（10 / 11，x64）。六个 Agent 的适配器都已经装在 App 里，不需要另外安装任何东西。
 
 1. **下载安装包。** 从[下载页](/download/)获取当前稳定版：macOS 是 `.dmg`，Windows 是 `-setup.exe`。请只从本站或 GitHub 上的官方发布页下载。
 2. **打开它。** macOS：把 Keysmith Switch 拖进「应用程序」。第一次打开会被拦一下：打开「系统设置 → 隐私与安全性」，在页面下方点「仍要打开」并确认。Windows：运行安装程序，如果提示「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」。它装在你自己的用户目录下，不需要管理员权限。
@@ -16,7 +16,7 @@ Keysmith Switch 是一个桌面 App，支持 macOS（Apple Silicon，macOS 12 �
 
 ## 第一次启动
 
-第一次打开时，Switch 会检查四个内置适配器是否可用，并扫描机器上已有的 Keysmith 提示词文件（例如 `~/.claude/keysmith/`、`~/.grok/rules/`）。找到的文件会列出来让你勾选导入，**导入只是放进提示词库，不会自动激活**。没有找到也没关系，直接完成设置即可。
+第一次打开时，Switch 会检查六个内置适配器是否可用，并扫描机器上已有的 Keysmith 提示词文件（例如 `~/.claude/keysmith/`、`~/.grok/rules/`）。找到的文件会列出来让你勾选导入，**导入只是放进提示词库，不会自动激活**。没有找到也没关系，直接完成设置即可。
 
 ## 部署第一条提示词
 
@@ -32,4 +32,4 @@ Keysmith Switch 是一个桌面 App，支持 macOS（Apple Silicon，macOS 12 �
 
 - [提示词库](/docs/library/)：标签、搜索、编辑和版本历史。
 - [部署计划](/docs/deploy/)：计划里每一项是什么意思，以及被拦截时怎么办。
-- [清理与回滚](/docs/cleanup/)：把 Agent 清回空白，再一键回滚。
+- [清理与回滚](/docs/cleanup/)：分项勾选清理范围（默认只清 Keysmith 部署），会话历史也能进版本一键回滚。

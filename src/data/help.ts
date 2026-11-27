@@ -16,7 +16,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "支持哪些 Agent？",
-          a: "Claude Code、Codex、Grok Build 和 ZCode。每个 Agent 由各自的开源适配器负责写入，见[各 Agent 的写入细节](/docs/agents/)。",
+          a: "Claude Code、Codex、Grok Build、ZCode、pi 和 DSH。每个 Agent 由各自的开源适配器负责写入，见[各 Agent 的写入细节](/docs/agents/)。",
         },
         {
           q: "收费吗？",
@@ -24,7 +24,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "需要装 Python 或别的依赖吗？",
-          a: "不需要。四个适配器都已打包在 App 里。Switch 也不会替你安装 Agent 本身，Agent 请从各自的官方渠道安装。",
+          a: "不需要。六个适配器都已打包在 App 里。Switch 也不会替你安装 Agent 本身，Agent 请从各自的官方渠道安装。",
         },
         {
           q: "会改坏我的配置吗？",
@@ -62,7 +62,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "检查更新超时",
-          a: "如果你用的是 v0.3.7 之前的版本，而且电脑开着代理，检查更新可能会超时。到[下载页](/download/)下载新版本手动安装一次，之后的更新就正常了。",
+          a: "v0.8.4 起，macOS 和 Windows 都会自动读取系统 HTTP 代理。如果你用的是更早版本且开着代理，检查更新可能会超时；到[下载页](/download/)下载新版本手动安装一次，之后的更新就正常了。",
         },
         {
           q: "怎么卸载？",
@@ -76,11 +76,11 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "部署了，但 Agent 里没有生效",
-          a: "部署后要**重启 Agent**：Claude Code、Codex、Grok Build 开一个新会话，ZCode 重新打开 App。已经打开的会话不会重新读取提示词。",
+          a: "部署后要**重启 Agent**：Claude Code、Codex、Grok Build、pi 开一个新会话，ZCode 重新打开 App，DSH 重启桌面端或服务。已经打开的会话不会重新读取提示词。",
         },
         {
           q: "部署被拦下，提示配置被改过",
-          a: "部署之后有人（或别的工具，例如 cc-switch）改过这个 Agent 的配置，这叫漂移。为了不覆盖你的修改，部署会被拦下。按弹窗提示操作：\n\n- 只是托管的几行被挪动：点「整理配置」；\n- 记录已经乱了：点「清理」从头开始（会删除这个 Agent 的登录和会话历史，先看清清理计划）。",
+          a: "部署之后有人（或别的工具，例如 cc-switch）改过这个 Agent 的配置，这叫漂移。为了不覆盖你的修改，部署会被拦下。按弹窗提示操作：\n\n- 只是托管的几行被挪动：点「整理配置」；\n- 记录已经乱了：点「清理」，保持默认勾选即可只清掉 Keysmith 自身的部署与过期记录，不会动你的会话历史、记忆、skills 或登录。",
         },
         {
           q: "停用时提示找不到部署记录或备份",
@@ -106,15 +106,15 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "清理会删掉什么？",
-          a: "清理把 Agent 清回刚安装的样子：移除部署的提示词、你自己加的规则和配置；登录、会话历史、插件和缓存会直接删除，不保存。清理前会先列出全部内容，详见[清理与回滚](/docs/cleanup/)。",
+          a: "「清理」采用分项勾选模式，**默认只清理 Keysmith 自身的提示词部署与托管残留**，不会动你的会话历史、记忆、skills 或登录。如果确实需要清理用户级指令文件、记忆文件夹、自定义扩展、会话历史或登录/缓存，需要逐项手动勾选。弹窗顶部会实时列出保持不变的个人资产，详见[清理与回滚](/docs/cleanup/)。",
         },
         {
           q: "清理之后还能找回来吗？",
-          a: "可以找回大部分：清理前会先存一个版本，在「设置 → 版本」里回滚，提示词、记忆文件、规则和配置都会放回去。登录和会话历史不会回来，需要重新登录。",
+          a: "所有可回滚项（包括勾选清理的提示词、指令文件、记忆文件夹、skills/规则配置，以及**会话历史与状态数据库**）都会在清理前自动保存到本机的「设置 → 版本」，随时可一键回滚，回滚本身也能撤销。只有独立红色危险区里的「登录凭证、含密钥配置与缓存」不会保存密钥，清理后需要重新登录。",
         },
         {
           q: "清理时提示 Agent 正在运行",
-          a: "先退出这个 Agent 再清理：它运行时，会话、记忆和登录正在使用中。",
+          a: "仅默认清理 Keysmith 部署时不需要退出 Agent。只有当你勾选了记忆文件夹、自定义扩展、会话历史或登录/缓存（或者要回滚这些内容）时，才需要先退出这个 Agent，避免文件或 SQLite 数据库正在写入中。",
         },
       ],
     },
@@ -132,7 +132,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "为什么我的 Agent 不能连接？",
-          a: "目前的限制：Claude Code 不支持 Bedrock 和 Vertex；Codex 需要使用自定义 provider，不能用内置的 OpenAI 登录；ZCode 不支持账号登录的 Coding Plan；Grok Build 要先运行过一次。",
+          a: "目前的限制：Claude Code 不支持 Bedrock 和 Vertex；Codex 需要使用自定义 provider，不能用内置的 OpenAI 登录；ZCode 不支持账号登录的 Coding Plan；Grok Build 要先运行过一次；pi 和 DSH 暂不支持输入替换。",
         },
       ],
     },
@@ -162,7 +162,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Which agents does it support?",
-          a: "Claude Code, Codex, Grok Build and ZCode. Each agent is written to by its own open-source adapter; see [How each agent is written](/en/docs/agents/).",
+          a: "Claude Code, Codex, Grok Build, ZCode, pi and DSH. Each agent is written to by its own open-source adapter; see [How each agent is written](/en/docs/agents/).",
         },
         {
           q: "Does it cost anything?",
@@ -170,7 +170,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Do I need Python or anything else?",
-          a: "No. The four adapters ship inside the app. Switch doesn't install the agents themselves; get those from their official sources.",
+          a: "No. All six adapters ship inside the app. Switch doesn't install the agents themselves; get those from their official sources.",
         },
         {
           q: "Could it break my configuration?",
@@ -208,7 +208,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Checking for updates times out",
-          a: "On versions before v0.3.7 with a proxy turned on, checking for updates can time out. Download the new version from the [download page](/en/download/) and install it once by hand; later updates then work.",
+          a: "Since v0.8.4, both macOS and Windows read the system HTTP proxy automatically. On earlier versions behind a proxy, checking for updates can time out: download the latest build from the [download page](/en/download/) and install it once by hand, and later updates will work.",
         },
         {
           q: "How do I uninstall?",
@@ -222,11 +222,11 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "I deployed, but the agent doesn't use it",
-          a: "**Restart the agent** after deploying: start a new session in Claude Code, Codex or Grok Build, and reopen ZCode. Sessions already open don't reload the prompt.",
+          a: "**Restart the agent** after deploying: start a new session in Claude Code, Codex, Grok Build or pi, reopen ZCode, or restart DSH's desktop app/service. Sessions already open don't reload the prompt.",
         },
         {
           q: "A deploy is blocked because the config changed",
-          a: "Someone (or another tool, such as cc-switch) edited this agent's configuration after the last deploy. That's drift, and the deploy is blocked so your edits aren't overwritten. Follow the dialog:\n\n- if only the managed lines moved, click Tidy config;\n- if the record is a mess, Clean up to start over (this deletes the agent's login and session history; read the cleanup plan first).",
+          a: "Someone (or another tool, such as cc-switch) edited this agent's configuration after the last deploy. That's drift, and the deploy is blocked so your edits aren't overwritten. Follow the dialog:\n\n- if only the managed lines moved, click Tidy config;\n- if the record is a mess, click Clean up and keep the default selection—that clears only Keysmith's own deployment and stale records without touching your sessions, memories, skills or logins.",
         },
         {
           q: "Turning off says the record or backup is missing",
@@ -252,15 +252,15 @@ export const HELP: Record<Lang, HelpSection[]> = {
       items: [
         {
           q: "What does cleanup delete?",
-          a: "Cleanup returns an agent to a fresh install: the deployed prompt, the rules and configuration you added are removed; logins, session history, plugins and caches are deleted, not saved. Everything is listed before it runs; see [Clean up and roll back](/en/docs/cleanup/).",
+          a: "Cleanup is opt-in per category and **defaults to clearing only Keysmith's own deployment and managed leftovers**—it never touches your session history, memories, skills or logins unless you explicitly tick them. The top of the dialog shows what stays untouched in real time; see [Clean up and roll back](/en/docs/cleanup/).",
         },
         {
           q: "Can I get it back afterwards?",
-          a: "Most of it. A version is saved first; roll back under Settings → Versions and the prompt, memory file, rules and configuration come back. Logins and session history don't; sign in again.",
+          a: "Yes for every recoverable item: before running, Switch saves a local version under Settings → Versions covering the deployed prompt, memory file, memories folder, custom skills/rules, and—if ticked—**your full session history and state databases**. One click rolls them back, and rollbacks themselves can be undone. Only the red danger section (“Logins, credentialed configs & caches”) drops credentials permanently and requires signing in again.",
         },
         {
           q: "Cleanup says the agent is running",
-          a: "Quit the agent first: while it runs, its sessions, memories and login are in use.",
+          a: "Default cleanup (Keysmith deployment only) doesn't ask you to quit the agent. You only need to quit the agent when you tick memories, custom extensions, session history or logins/caches (or roll them back), so open files and SQLite databases aren't modified mid-write.",
         },
       ],
     },
@@ -278,7 +278,7 @@ export const HELP: Record<Lang, HelpSection[]> = {
         },
         {
           q: "Why can't my agent connect?",
-          a: "Current limits: Claude Code doesn't support Bedrock or Vertex; Codex needs a custom provider rather than its built-in OpenAI sign-in; ZCode doesn't support Coding Plan sign-in; Grok Build must have run once.",
+          a: "Current limits: Claude Code doesn't support Bedrock or Vertex; Codex needs a custom provider rather than its built-in OpenAI sign-in; ZCode doesn't support Coding Plan sign-in; Grok Build must have run once; pi and DSH don't support input rewrite yet.",
         },
       ],
     },

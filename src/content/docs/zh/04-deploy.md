@@ -36,6 +36,6 @@ page: deploy
 
 ## 部署之后
 
-- **重启 Agent。** Claude Code、Codex、Grok Build 要开一个新会话，ZCode 要重新打开 App，新的提示词才会被读到。
+- **重启 Agent。** Claude Code、Codex、Grok Build、pi 要开一个新会话，ZCode 要重新打开 App，DSH 要重启桌面端或服务，新的提示词才会被读到。
 - **部署记录。** 每次部署、停用都会留下操作记录，备份放在 `~/.keysmith-switch/backups/<操作 id>/`。
 - **相同正文不重复。** 部署的正文和库里已有的一条完全相同时，Switch 直接复用那一条，不会悄悄改它的标题或标签。

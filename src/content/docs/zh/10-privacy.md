@@ -13,7 +13,8 @@ page: privacy
 | `~/.keysmith-switch/keysmith-switch.db` | 提示词库与操作记录 |
 | `~/.keysmith-switch/prompts/<tool>/<prompt-id>.md` | 提示词正文 |
 | `~/.keysmith-switch/backups/<operation-id>/` | 部署前的备份 |
-| `~/.keysmith-switch/snapshots/` | 清理前保存的版本 |
+| `~/.keysmith-switch/snapshots/` | 清理或回滚前保存的本机版本（含勾选清理的记忆、扩展与会话历史；纯本地保存，不导出也不上传） |
+| `~/.keysmith-switch/components/` | 官方组件包的安装记录（`ledger.json`） |
 | `~/.keysmith-switch/logs/` | 日志（中转服务日志为 `relay.log`） |
 | `~/.keysmith-switch/input-rewrite/` | 输入替换的规则快照、端口与转发地址、各 Agent 的连接记录 |
 
